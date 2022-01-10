@@ -62,6 +62,7 @@ def add_answer_page(question_id):
             question_id=question_id,
             message=request.form.get("answer"),
             image=util.upload_picture(request.files.get("image"), "answer"),
+            user_id=session["user_id"]
         )
         return redirect(url_for("question_page", question_id=question_id))
     return render_template("add_answer.html", question_id=question_id, username=session["username"])
@@ -159,7 +160,7 @@ def answer_vote_down(answer_id):
 def add_question_comment_page(question_id):
     if request.method == "POST":
         database_manager.add_comment_question(
-            question_id=question_id, message=request.form.get("comment_message")
+            question_id=question_id, message=request.form.get("comment_message"), user_id=session["user_id"]
         )
         return redirect(url_for("question_page", question_id=question_id))
     return render_template("add_question_comment.html", question_id=question_id, username=session["username"])
@@ -170,7 +171,7 @@ def add_answer_comment_page(answer_id):
     answer = database_manager.get_answer_by_id(answer_id)
     if request.method == "POST":
         database_manager.add_comment_answer(
-            answer_id=answer.get("id"), message=request.form.get("comment_message")
+            answer_id=answer.get("id"), message=request.form.get("comment_message"), user_id=session["user_id"]
         )
         return redirect(url_for("question_page", question_id=answer.get("question_id")))
     return render_template("add_answer_comment.html", answer_id=answer_id, username=session["username"])
