@@ -58,18 +58,24 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light {
 
 nav.navbar.navbar-expand-lg.navbar-light.bg-light {
     height: auto;
-    background-color: #accce9;
+    background-color: #383838;
 }
 
 .detailbutton,
 a.nav-link,
 .navbar-nav {
     margin: 8px;
+
 }
 
 a.nav-link {
     float: left;
-    background-color: aquamarine;
+    background-color: #8d8c8c;
+    color: aliceblue;
+    border-radius: 10px;
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    text-wrap: normal;
 }
 
 .detailnavbar,
@@ -80,7 +86,7 @@ a.nav-link.disabled {
 .detailbutton:hover,
 a.navbar-brand:hover,
 a.nav-link:hover {
-    background-color: aqua;
+    background-color: rgb(185, 185, 185);
 }
 
 .titlequestion {

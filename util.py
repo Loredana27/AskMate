@@ -76,7 +76,9 @@ def add_tag_to_question(question_id, tag_name):
 def get_tag_for_question(question):
     question_tags = database_manager.get_tag_relation(question.get("id"))
     try:
-        tags = [database_manager.get_tag_by_id(tag.get("tag_id")) for tag in question_tags]
+        tags = [
+            database_manager.get_tag_by_id(tag.get("tag_id")) for tag in question_tags
+        ]
         question.update({"tags": tags})
     except:
         print("No tag")

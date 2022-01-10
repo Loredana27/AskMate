@@ -317,6 +317,37 @@ def delete_all_question_tags_relation(cursor, question_id):
 
 
 @database_connection.connection_handler
+def get_user(cursor, username):
+    query = """
+            SELECT *
+            FROM users
+            WHERE username=%(username)s
+            ;"""
+    cursor.execute(query, {"username": username})
+    return cursor.fetchone()
+
+
+@database_connection.connection_handler
+def get_all_users(cursor, id_user):
+    query = """
+            SELECT users.username,   
+                users.registration_date,
+                COUNT(question.id) as number_of_questions,
+                COUNT(answer.id) as number_of_answers,
+                COUNT(comment.id) as number_of_comment
+            FROM users,question,answer,comment
+            WHERE 
+                answer.user_id = %(id_user)s
+                    OR
+                question.user_id = %(id_user)s
+                    OR
+                comment.user_id = %(id_user)s
+            GROUP BY username
+            """
+    cursor.execute(query)
+    return cursor.fetchall()
+
+@database_connection.connection_handler
 def insert_user(cursor, username, password):
     query = """
                 INSERT INTO users(username, password)
@@ -326,12 +357,35 @@ def insert_user(cursor, username, password):
 
 
 @database_connection.connection_handler
-def get_all_users(cursor, id_user):
+def get_comment_number(cursor, id_user):
     query = """
             SELECT 
-                users.username,   
-                users.registration_date,
-                
-            """
-    cursor.execute(query)
+                COUNT(comment.id) as number_of_comment
+            FROM comment
+            WHERE 
+                comment.user_id = %(id_user)s
+        ;"""
+    cursor.execute(query, {"id_user": id_user})
+    return cursor.fetchall()
+
+
+@database_connection.connection_handler
+def get_answer_number(cursor, id_user):
+    query = """
+            SELECT 
+                COUNT(answer.id) as number_of_answers
+            FROM answer
+            WHERE user_id = %(id_user)s
+        ;"""
+    cursor.execute(query, {"id_user": id_user})
+    return cursor.fetchall()
+
+@database_connection.connection_handler
+def get_question_number(cursor, id_user):
+    query = """
+            SELECT COUNT(question.id) as number_of_questions
+            FROM question
+            WHERE user_id = %(id_user)s
+        ;"""
+    cursor.execute(query, {"id_user": id_user})
     return cursor.fetchall()
