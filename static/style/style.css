@@ -1,11 +1,21 @@
 body {
     text-align: justify;
 }
+header{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin-bottom: 25px;
+}
 .nav{
     position: relative;
     margin: 0;
 }
-.firstdiv,
+.firstdiv{
+    margin-top: 100px;
+}
+
 form {
     margin-top: 80px;
 }
@@ -36,30 +46,33 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light,
 
 .nav-link.disabled.account{
     width: auto;
+    margin-top: 25px;
 }
 
 .nav-link.disabled.logo{
-    width: 170px;
+    width: 110px;
 }
 
 .nav-link.disabled.logout{
      right: 0;
      width: auto;
+    margin-top: 25px;
 }
 
 a.navbar-brand,
 a.nav-link {
     padding: 8px;
+    font-size: 15px;
 }
 
 a.navbar-brand {
     margin: 16px 8px 16px 16px;
-    background-color: darkgray;
-    color: aliceblue;
+    background-color: #383839;
+    color: #ffffff;
     border-radius: 15px;
     padding: 14px;
     font-weight: inherit;
-    font-size: 35px;
+    font-size: 20px;
     font-family: 'Playfair Display', serif;
 }
 
@@ -87,15 +100,23 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light {
 .detailbutton,
 a.nav-link,
 .navbar-nav {
-    margin: 8px;
+    display: inline;
+    margin: 16px 8px 8px;
+}
 
+.floatNav{
+    float: right;
+    position: absolute;
+    right: 7px;
+    margin: 0;
 }
 
 a.nav-link {
-    width: 100px;
+    width: 60px;
+    text-align: center;
     float: left;
-    background-color: #8d8c8c;
-    color: aliceblue;
+    background-color: #383839;
+    color: #ffffff;
     border-radius: 10px;
     text-decoration: none;
     font-family: 'Playfair Display', serif;
@@ -111,7 +132,8 @@ a.nav-link.disabled {
 .detailbutton:hover,
 a.navbar-brand:hover,
 a.nav-link:hover {
-    background-color: rgb(185, 185, 185);
+    /*background-color: rgb(255, 255, 255);*/
+    color: rgba(185,185,185,0.55);
 }
 
 .titlequestion {
