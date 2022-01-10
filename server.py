@@ -5,6 +5,7 @@ import util
 from bonus_questions import SAMPLE_QUESTIONS
 
 app = Flask(__name__)
+app.secret_key = b'_5#87x"F4Qdu\n\xec]/'
 
 @app.route("/")
 def main_page():
@@ -229,6 +230,12 @@ def sort_by():
 @app.route("/bonus-questions")
 def bonus_questions_page():
     return render_template('bonus_questions.html', questions=SAMPLE_QUESTIONS)
+
+
+@app.route("/registration")
+def registration_page():
+
+    return render_template('registration.html')
 
 
 if __name__ == "__main__":
