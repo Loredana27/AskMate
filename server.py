@@ -1,11 +1,13 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, session
 
+import cryptography
 import database_manager
 import util
 from bonus_questions import SAMPLE_QUESTIONS
 
 app = Flask(__name__)
 app.secret_key = b'_5#87x"F4Qdu\n\xec]/'
+
 
 @app.route("/")
 def main_page():
@@ -170,7 +172,9 @@ def add_answer_comment_page(answer_id):
 
 @app.route("/search")
 def search_question():
-    questions, search_term = database_manager.get_question_by_search(request.args.get("q"))
+    questions, search_term = database_manager.get_question_by_search(
+        request.args.get("q")
+    )
     questions = util.add_answer_number(questions)
     questions = util.get_tag_for_questions(questions)
     return render_template("list.html", questions=questions, search_term=search_term)
@@ -208,8 +212,7 @@ def delete_comment_page(comment_id):
 def add_tag_page(question_id):
     if request.method == "POST":
         util.add_tag_to_question(
-            question_id=question_id,
-            tag_name=request.form.get("tag")
+            question_id=question_id, tag_name=request.form.get("tag")
         )
         return redirect(url_for("question_page", question_id=question_id))
     return render_template("add_tag.html", question_id=question_id)
@@ -218,24 +221,60 @@ def add_tag_page(question_id):
 @app.route("/question/<question_id>/tag/<tag_id>/delete-tag")
 def delete_tag_page(question_id, tag_id):
     database_manager.delete_tag_relation(question_id, tag_id)
-    return redirect(url_for('list_page'))
+    return redirect(url_for("list_page"))
 
 
 @app.route("/sort_by")
 def sort_by():
-    questions = database_manager.get_sorted_questions(request.args.get("sort_by"), request.args.get("order_direction"))
-    return render_template('list.html', questions=questions)
+    questions = database_manager.get_sorted_questions(
+        request.args.get("sort_by"), request.args.get("order_direction")
+    )
+    return render_template("list.html", questions=questions, username=session["username"])
 
 
 @app.route("/bonus-questions")
 def bonus_questions_page():
-    return render_template('bonus_questions.html', questions=SAMPLE_QUESTIONS)
+    return render_template("bonus_questions.html", questions=SAMPLE_QUESTIONS, username=session["username"])
 
 
-@app.route("/registration")
+@app.route("/registration", methods=["GET", "POST"])
 def registration_page():
+    if request.method == "POST":
+        password = request.form.get("reg_password")
+        confirm_password = request.form.get("reg_password_confirm")
+        if password == confirm_password:
+            database_manager.insert_user(
+                username=request.form.get("reg_username"),
+                password=cryptography.hash_password(password),
+            )
+            return redirect(url_for("login_page"))
+    return render_template("registration.html")
 
-    return render_template('registration.html')
+
+@app.route("/login", methods=["GET", "POST"])
+def login_page():
+    if request.method == "POST":
+        user = database_manager.get_user(request.form["username"])
+        if cryptography.verify_password(
+            request.form["password"], user["password"]
+        ):
+            session.update({"username": user["username"], "user_id": user["id"]})
+            return redirect(url_for("main_page"))
+    return render_template("login_page.html")
+
+
+@app.route("/logout")
+def logout_page():
+    session.pop("username")
+    session.pop("user_id")
+    return redirect(url_for("main_page"))
+
+
+@app.route("/list_users")
+def list_users_page():
+    users = database_manager.get_all_users()
+
+    return render_template("list_users.html", users=users, username=session["username"])
 
 
 if __name__ == "__main__":
@@ -243,7 +282,3 @@ if __name__ == "__main__":
         port=5000,
         debug=True,
     )
-
-
-
-
