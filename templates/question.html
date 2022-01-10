@@ -1,0 +1,235 @@
+{% extends "base_template.html" %} {% block title %} Question {{ question.id }}{% endblock %}
+{% block content %}
+    <div class="firstdiv">
+        <table class="question_table">
+            <tr class="detailsrow">
+                <td colspan="2">
+                    <ul class="detailnavbar">
+                        <li>{{ question.vote_number }} vote score</li>
+                        <li>{{ question.view_number }} views</li>
+                        <li>{{ question.answer_number }} answers</li>
+                        <li>Submission time: {{ question.submission_time }}</li>
+                        <li>
+                        {% if question.tags %}
+                            Tags:
+                                {% for tag in question.tags %}
+                                    {{ tag.name }}
+                                    <a
+                                        href="{{ url_for('delete_tag_page', question_id=question.id, tag_id=tag.id) }}"
+                                        class="detailbutton"
+                                    >
+                                        Delete {{ tag.name }}
+                                    </a>
+                                {% endfor %}
+                        {% endif %}
+                    </li>
+                    <li>
+                        <a
+                                href="{{ url_for('add_tag_page',question_id=question.id) }}"
+                                class="detailbutton"
+                            >
+                                Add tag
+                            </a>
+                    </li>
+                        <li class="floatbutton">
+                            <a
+                                href="{{ url_for('edit_question_page', question_id=question.id) }}"
+                                class="detailbutton"
+                                >Edit</a
+                            >
+                        </li>
+                        <li class="floatbutton">
+                            <a
+                                href="{{ url_for('delete_question', question_id=question.id) }}"
+                                class="detailbutton"
+                                >Delete</a
+                            >
+                        </li>
+                        <li class="floatbutton">
+                            <a
+                                href="{{ url_for('question_vote_up', question_id=question.id) }}"
+                                class="detailbutton"
+                                >Vote up</a
+                            >
+                        </li>
+                        <li class="floatbutton">
+                            <a
+                                href="{{ url_for('question_vote_down', question_id=question.id) }}"
+                                class="detailbutton"
+                                >Vote down</a
+                            >
+                        </li>
+                        <li class="floatbutton">
+                            <a
+                                class="detailbutton"
+                                href="{{url_for('add_question_comment_page', question_id=question.id)  }}"
+                            >
+                                Reply
+                            </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td class="question_title">
+                    <a
+                        href="{{ url_for('question_page', question_id=question.id) }}"
+                        class="titlequestion"
+                        >{{ question.title }}</a
+                    >
+                </td>
+                <td rowspan="2">
+                    {% if question.image %}
+                    <img
+                        src="{{ url_for('static', filename=question.image) }}"
+                        width="20%"
+                        alt="Question Image"
+                    />
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p class="questionmessage">{{ question.message }}</p>
+                </td>
+            </tr>
+        </table>
+            {% for comment in question.comments %}
+{#                <div class="comment_div">#}
+                    <table class="comment_table">
+                        <tr>
+                            <td><p class="comment_p">{{ comment.message }}</p></td>
+                        </tr>
+
+                        <tr class="detailsrow">
+                            <td>
+                                <ul class="detailnavbar">
+                                    <li>{{ comment.edited_count }} times edited</li>
+                                    <li>Submission time: {{ comment.submission_time }}</li>
+                                    <li class="floatbutton">
+                                        <a
+                                            href="{{ url_for('delete_comment_page', comment_id=comment.id ) }}"
+                                            class="detailbutton"
+                                            >Delete</a
+                                        >
+                                    </li>
+                                    <li class="floatbutton">
+                                        <a
+                                            href="{{ url_for('edit_comment_page', comment_id=comment.id) }}"
+                                            class="detailbutton"
+                                            >Edit</a
+                                        >
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+{#                </div>#}
+            {% endfor %}
+
+    </div>
+
+    {% for answer in question.answers %}
+        <div class="firstdiv">
+            <table class="question_table">
+                <tr class="detailsrow">
+                    <td colspan="2">
+                        <ul class="detailnavbar">
+                            <li>{{ answer.vote_number }} vote score</li>
+                            <li>Submission time: {{ answer.submission_time }}</li>
+                            <li class="floatbutton">
+                                <a
+                                    href="{{ url_for('edit_answer_page', answer_id=answer.id) }}"
+                                    class="detailbutton"
+                                    >Edit</a
+                                >
+                            </li>
+                            <li class="floatbutton">
+                                <a
+                                    href="{{ url_for('delete_answer', answer_id=answer.id) }}"
+                                    class="detailbutton"
+                                    >Delete</a
+                                >
+                            </li>
+                            <li class="floatbutton">
+                                <a
+                                    href="{{ url_for('answer_vote_up', answer_id=answer.id)}}"
+                                    class="detailbutton"
+                                    >Vote up</a
+                                >
+                            </li>
+                            <li class="floatbutton">
+                                <a
+                                    href="{{ url_for('answer_vote_down', answer_id=answer.id) }}"
+                                    class="detailbutton"
+                                    >Vote down</a
+                                >
+                            </li>
+                            <li class="floatbutton">
+                                <a
+                                    class="detailbutton"
+                                    href="{{ url_for('add_answer_comment_page', answer_id=answer.id)  }}"
+                                >
+                                    Reply
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="question_title">
+                        <p class="questionmessage">{{ answer.message }}</p>
+                    </td>
+
+                    <td>
+                        {% if question.image != '' %}
+                            <img
+                                src="{{ url_for('static', filename=answer.image) }}"
+                                width="20%"
+                                alt="Question Image"
+                            />
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+            {% for comment in answer.comments %}
+
+                    <table class="comment_table">
+                        <tr>
+                            <td>{{ comment.message }}</td>
+                        </tr>
+
+                        <tr class="detailsrow">
+                            <td>
+                                <ul class="detailnavbar">
+                                    <li>{{ comment.edited_count }} times edited</li>
+                                    <li>Submission time: {{ comment.submission_time }}</li>
+                                    <li class="floatbutton">
+                                        <a
+                                            href="{{ url_for('delete_comment_page', comment_id=comment.id ) }}"
+                                            class="detailbutton"
+                                            >Delete</a
+                                        >
+                                    </li>
+                                    <li class="floatbutton">
+                                        <a
+                                            href="{{ url_for('edit_comment_page', comment_id=comment.id) }}"
+                                            class="detailbutton"
+                                            >Edit</a
+                                        >
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+
+            {% endfor %}
+    {% endfor %}
+    <a
+        class="addanswerbutton"
+        href="{{url_for('add_answer_page', question_id=question.id)  }}"
+        >Add answer</a
+    >
+
+{% endblock %}
