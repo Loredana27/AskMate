@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <title>
         {% block title %}
-        {% endblock %}
+        {% endblock %} - AskMate
     </title>
+    {% block head %}
+    {% endblock %}
     <link rel="stylesheet" href="{{ url_for('static',filename='style/style.css') }}">
 </head>
 <body>
