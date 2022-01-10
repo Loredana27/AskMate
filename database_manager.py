@@ -6,16 +6,16 @@ def add_question(cursor, title, message, image, user_id):
     query = """
             INSERT INTO question(title, message, image,user_id) 
             VALUES (%(title)s, %(message)s, %(image)s, %(user_id)s );"""
-    cursor.execute(query, {"title": title, "message": message, "image": image, "user_id":user_id})
+    cursor.execute(query, {"title": title, "message": message, "image": image, "user_id": user_id})
 
 
 @database_connection.connection_handler
-def add_answer(cursor, question_id, message, image):
+def add_answer(cursor, question_id, message, image, user_id):
     query = """
-            INSERT INTO answer(question_id, message, image) 
-            VALUES (%(question_id)s, %(message)s, %(image)s );"""
+            INSERT INTO answer(question_id, message, image, user_id) 
+            VALUES (%(question_id)s, %(message)s, %(image)s, %(user_id)s );"""
     cursor.execute(
-        query, {"question_id": question_id, "message": message, "image": image}
+        query, {"question_id": question_id, "message": message, "image": image, "user_id": user_id}
     )
 
 
@@ -134,19 +134,19 @@ def get_answer_seq_value(cursor):
 
 
 @database_connection.connection_handler
-def add_comment_question(cursor, message, question_id):
+def add_comment_question(cursor, message, question_id, user_id):
     query = """
-            INSERT INTO comment(message, question_id) 
-            VALUES (%(message)s, %(question_id)s);"""
-    cursor.execute(query, {"message": message, "question_id": question_id})
+            INSERT INTO comment(message, question_id, user_id) 
+            VALUES (%(message)s, %(question_id)s, %(user_id)s);"""
+    cursor.execute(query, {"message": message, "question_id": question_id, "user_id": user_id})
 
 
 @database_connection.connection_handler
-def add_comment_answer(cursor, message, answer_id):
+def add_comment_answer(cursor, message, answer_id, user_id):
     query = """
-            INSERT INTO comment(message, answer_id) 
-            VALUES (%(message)s, %(answer_id)s);"""
-    cursor.execute(query, {"message": message, "answer_id": answer_id})
+            INSERT INTO comment(message, answer_id, user_id) 
+            VALUES (%(message)s, %(answer_id)s, %(user_id)s);"""
+    cursor.execute(query, {"message": message, "answer_id": answer_id, "user_id": user_id})
 
 
 @database_connection.connection_handler
@@ -328,24 +328,66 @@ def get_user(cursor, username):
 
 
 @database_connection.connection_handler
-def get_all_users(cursor, id_user):
+def get_all_users_questions(cursor):
     query = """
-            SELECT users.username,   
-                users.registration_date,
-                COUNT(question.id) as number_of_questions,
-                COUNT(answer.id) as number_of_answers,
-                COUNT(comment.id) as number_of_comment
-            FROM users,question,answer,comment
-            WHERE 
-                answer.user_id = %(id_user)s
-                    OR
-                question.user_id = %(id_user)s
-                    OR
-                comment.user_id = %(id_user)s
-            GROUP BY username
+            SELECT username,   
+            DATE(registration_date) AS registration_date,
+            COUNT(question.id) AS questions,
+            COUNT(answer.id) AS answers,
+            COUNT(comment.id) AS comments
+            FROM users
+            INNER JOIN question on users.id = question.user_id
+            INNER JOIN answer on users.id = answer.user_id
+            INNER JOIN comment on users.id = comment.user_id
+            GROUP BY username, DATE(registration_date)
             """
     cursor.execute(query)
     return cursor.fetchall()
+
+
+@database_connection.connection_handler
+def get_all_users_questions(cursor):
+    query = """
+            SELECT username,   
+            DATE(registration_date) AS registration_date,
+            COUNT(question.id) AS questions,
+            COUNT(answer.id) AS answers,
+            COUNT(comment.id) AS comments
+            FROM users
+            INNER JOIN question on users.id = question.user_id
+            INNER JOIN answer on users.id = answer.user_id
+            INNER JOIN comment on users.id = comment.user_id
+            GROUP BY username, DATE(registration_date)
+            """
+    cursor.execute(query)
+    return cursor.fetchall()
+
+
+@database_connection.connection_handler
+def get_all_users(cursor):
+    query = """
+            SELECT username,   
+            DATE(registration_date) AS registration_date,
+            COUNT(question.id) AS questions, 
+            (SELECT
+                COUNT(answer.id)
+                FROM users
+                INNER JOIN answer on users.id = answer.user_id
+                GROUP BY username
+                ) AS answers,
+            (SELECT
+                COUNT(comment.id)
+                FROM users
+                INNER JOIN comment on users.id = comment.user_id
+                GROUP BY username
+                ) AS comments
+            FROM users
+            INNER JOIN question on users.id = question.user_id
+            GROUP BY username, DATE(registration_date)
+            """
+    cursor.execute(query)
+    return cursor.fetchall()
+
 
 @database_connection.connection_handler
 def insert_user(cursor, username, password):
