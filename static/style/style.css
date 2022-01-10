@@ -1,7 +1,10 @@
 body {
     text-align: justify;
 }
-
+.nav{
+    position: relative;
+    margin: 0;
+}
 .firstdiv,
 form {
     margin-top: 80px;
@@ -10,6 +13,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light,
 .detailsrow,
 .question_table {
     width: 100%;
+    margin: 0;
 }
 .question_table {
     border: rgba(0, 0, 0, 0.35) 3px dashed;
@@ -30,6 +34,19 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light,
     width: 80%;
 }
 
+.nav-link.disabled.account{
+    width: auto;
+}
+
+.nav-link.disabled.logo{
+    width: 170px;
+}
+
+.nav-link.disabled.logout{
+     right: 0;
+     width: auto;
+}
+
 a.navbar-brand,
 a.nav-link {
     padding: 8px;
@@ -37,7 +54,13 @@ a.nav-link {
 
 a.navbar-brand {
     margin: 16px 8px 16px 16px;
-    background-color: #75ccf5cc;
+    background-color: darkgray;
+    color: aliceblue;
+    border-radius: 15px;
+    padding: 14px;
+    font-weight: inherit;
+    font-size: 35px;
+    font-family: 'Playfair Display', serif;
 }
 
 /* inline flex */
@@ -69,6 +92,7 @@ a.nav-link,
 }
 
 a.nav-link {
+    width: 100px;
     float: left;
     background-color: #8d8c8c;
     color: aliceblue;
@@ -81,6 +105,7 @@ a.nav-link {
 .detailnavbar,
 a.nav-link.disabled {
     display: inline;
+
 }
 
 .detailbutton:hover,

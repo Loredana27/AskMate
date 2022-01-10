@@ -11,11 +11,16 @@ app.secret_key = b'_5#87x"F4Qdu\n\xec]/'
 
 @app.route("/")
 def main_page():
+    if "username" not in session:
+        return redirect(url_for('login_page'))
     questions = database_manager.get_latest_five_questions()
     first_five = util.get_first_five_dicts(questions)
     first_five = util.add_answer_number(first_five)
     first_five = util.get_tag_for_questions(first_five)
-    return render_template("list.html", questions=first_five)
+    print(database_manager.get_question_number(session['user_id']))
+    print(database_manager.get_answer_number(session["user_id"]))
+    print(database_manager.get_comment_number(session["user_id"]))
+    return render_template("list.html", questions=first_five, username=session["username"])
 
 
 @app.route("/list")
@@ -23,7 +28,7 @@ def list_page():
     questions = database_manager.get_questions()
     questions = util.add_answer_number(questions)
     questions = util.get_tag_for_questions(questions)
-    return render_template("list.html", questions=questions)
+    return render_template("list.html", questions=questions, username=session["username"])
 
 
 @app.route("/question/<question_id>")
@@ -34,7 +39,7 @@ def question_page(question_id):
     question = util.add_answers_to_question(question)
     question = util.add_comments_to_question(question)
     question = util.get_tag_for_question(question)
-    return render_template("question.html", question=question)
+    return render_template("question.html", question=question, username=session["username"])
 
 
 @app.route("/add-question", methods=["GET", "POST"])
@@ -44,9 +49,10 @@ def add_question_page():
             title=request.form.get("question_title"),
             message=request.form.get("question_message"),
             image=util.upload_picture(request.files.get("image"), "question"),
+            user_id=session["user_id"]
         )
         return redirect(url_for("list_page"))
-    return render_template("add_question.html")
+    return render_template("add_question.html", username=session["username"])
 
 
 @app.route("/question/<question_id>/new-answer", methods=["GET", "POST"])
@@ -58,7 +64,7 @@ def add_answer_page(question_id):
             image=util.upload_picture(request.files.get("image"), "answer"),
         )
         return redirect(url_for("question_page", question_id=question_id))
-    return render_template("add_answer.html", question_id=question_id)
+    return render_template("add_answer.html", question_id=question_id, username=session["username"])
 
 
 @app.route("/question/<question_id>/edit", methods=["GET", "POST"])
@@ -73,7 +79,7 @@ def edit_question_page(question_id):
         )
         database_manager.update_question(question)
         return redirect(url_for("question_page", question_id=question_id))
-    return render_template("edit_question.html", question=question)
+    return render_template("edit_question.html", question=question, username=session["username"])
 
 
 @app.route("/answer/<answer_id>/edit-answer", methods=["GET", "POST"])
@@ -88,7 +94,7 @@ def edit_answer_page(answer_id):
                 question_id=answer.get("question_id"),
             )
         )
-    return render_template("edit_answer.html", answer=answer)
+    return render_template("edit_answer.html", answer=answer, username=session["username"])
 
 
 @app.route("/question/<question_id>/delete-question")
@@ -156,7 +162,7 @@ def add_question_comment_page(question_id):
             question_id=question_id, message=request.form.get("comment_message")
         )
         return redirect(url_for("question_page", question_id=question_id))
-    return render_template("add_question_comment.html", question_id=question_id)
+    return render_template("add_question_comment.html", question_id=question_id, username=session["username"])
 
 
 @app.route("/answer/<answer_id>/new-comment", methods=["GET", "POST"])
@@ -167,7 +173,7 @@ def add_answer_comment_page(answer_id):
             answer_id=answer.get("id"), message=request.form.get("comment_message")
         )
         return redirect(url_for("question_page", question_id=answer.get("question_id")))
-    return render_template("add_answer_comment.html", answer_id=answer_id)
+    return render_template("add_answer_comment.html", answer_id=answer_id, username=session["username"])
 
 
 @app.route("/search")
@@ -177,7 +183,7 @@ def search_question():
     )
     questions = util.add_answer_number(questions)
     questions = util.get_tag_for_questions(questions)
-    return render_template("list.html", questions=questions, search_term=search_term)
+    return render_template("list.html", questions=questions, search_term=search_term, username=session["username"])
 
 
 @app.route("/comment/<comment_id>/edit", methods=["GET", "POST"])
@@ -194,7 +200,7 @@ def edit_comment_page(comment_id):
                 question_id=comment.get("question_id"),
             )
         )
-    return render_template("edit_comment.html", comment=comment)
+    return render_template("edit_comment.html", comment=comment, username=session["username"])
 
 
 @app.route("/comments/<comment_id>/delete")
@@ -215,7 +221,7 @@ def add_tag_page(question_id):
             question_id=question_id, tag_name=request.form.get("tag")
         )
         return redirect(url_for("question_page", question_id=question_id))
-    return render_template("add_tag.html", question_id=question_id)
+    return render_template("add_tag.html", question_id=question_id, username=session["username"])
 
 
 @app.route("/question/<question_id>/tag/<tag_id>/delete-tag")

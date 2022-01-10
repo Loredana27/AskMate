@@ -1,4 +1,5 @@
 <header>
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ url_for('main_page') }}">Home</a>
@@ -22,8 +23,14 @@
                         href="{{ url_for('add_question_page') }}"
                         >Add question</a
                     >
-                    <a class="nav-link disabled" style="float: right"
-                        >AskMate - by L.A.S (VEGAS)</a
+                    <a class="nav-link disabled logout" href="{{ url_for('logout_page') }}">
+                        LOG OUT
+                    </a>
+                    <a class="nav-link disabled account">
+                        {{ username }}
+                    </a>
+                    <a class="nav-link disabled logo" style="float: right"
+                        >AskMate made by L.A.S (VEGAS)</a
                     >
                 </div>
             </div>
