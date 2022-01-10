@@ -1,8 +1,10 @@
 from flask import Flask, render_template, redirect, url_for, request
 
+import cryptography
 import database_manager
 import util
 from bonus_questions import SAMPLE_QUESTIONS
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = b'_5#87x"F4Qdu\n\xec]/'
@@ -232,10 +234,27 @@ def bonus_questions_page():
     return render_template('bonus_questions.html', questions=SAMPLE_QUESTIONS)
 
 
-@app.route("/registration")
+@app.route("/registration", methods=["GET", "POST"])
 def registration_page():
+    if request.method == "POST":
+        password = request.form.get("reg_password")
+        confirm_password = request.form.get("reg_password_confirm")
+        if password == confirm_password:
+            database_manager.insert_user(
+                username=request.form.get("reg_username"),
+                password=cryptography.hash_password(password),
+            )
+            return redirect(url_for("login_page"))
+    return render_template("registration.html")
 
-    return render_template('registration.html')
+
+@app.route("/list_users")
+def list_users_page():
+    users = database_manager.get_all_users()
+
+    return render_template("list_users.html", users=users)
+
+
 
 
 if __name__ == "__main__":

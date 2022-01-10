@@ -314,3 +314,24 @@ def delete_all_question_tags_relation(cursor, question_id):
                   question_id = %(question_id)s
               ;"""
     cursor.execute(query, {"question_id": question_id})
+
+
+@database_connection.connection_handler
+def insert_user(cursor, username, password):
+    query = """
+                INSERT INTO users(username, password)
+                VALUES(%(username)s, %(password)s )
+                ;"""
+    cursor.execute(query, {"username": username, "password": password})
+
+
+@database_connection.connection_handler
+def get_all_users(cursor, id_user):
+    query = """
+            SELECT 
+                users.username,   
+                users.registration_date,
+                
+            """
+    cursor.execute(query)
+    return cursor.fetchall()
