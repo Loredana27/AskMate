@@ -8,9 +8,11 @@ header{
     top: 0;
     margin-bottom: 25px;
 }
-.nav{
-    position: relative;
-    margin: 0;
+nav{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
 }
 .firstdiv{
     margin-top: 100px;
@@ -85,6 +87,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light {
 /* flex */
 .container-fluid,
 nav.navbar.navbar-expand-lg.navbar-light.bg-light {
+
     flex-direction: row;
     flex-wrap: wrap;
     align-content: flex-start;
@@ -107,7 +110,8 @@ a.nav-link,
 .searchForm{
     display: inline-block;
     position: fixed;
-    top: -67px;
+    top: -80px;
+    right: 7px;
 
 }
 
@@ -118,8 +122,13 @@ a.nav-link,
 .floatNav{
     float: right;
     position: fixed;
-    right: 7px;
+    right: 270px;
     margin: 0;
+}
+
+.pageNav{
+    position: fixed;
+    left: 60px;
 }
 
 a.nav-link {
