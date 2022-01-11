@@ -3,6 +3,7 @@ body {
     background-image: url("/static/images/keep_the_ocean_clean-wallpaper-1920x1080.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
+    font-family: 'Playfair Display', serif;
 }
 header{
     position: absolute;
@@ -46,9 +47,7 @@ nav{
     margin-top: 100px;
 }
 
-form {
-    margin-top: 80px;
-}
+
 nav.navbar.navbar-expand-lg.navbar-light.bg-light,
 .detailsrow,
 .question_table {
@@ -138,9 +137,9 @@ a.nav-link,
 .searchForm{
     display: inline-block;
     position: fixed;
-    top: -72px;
+    top: 8px;
     right: 7px;
-
+    font-family: 'Playfair Display', serif;
 }
 
 .searchForm form{
