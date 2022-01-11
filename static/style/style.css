@@ -10,6 +10,7 @@ header{
     right: 0;
     top: 0;
     margin-bottom: 25px;
+    z-index: 5000;
 }
 footer{
     position: fixed;
@@ -18,9 +19,22 @@ footer{
     right: 0;
     background: #383839;
     text-align: center;
+    z-index: 5000;
 }
 footer div h5{
     color: white;
+}
+
+#q{
+    width: 200px;
+    height: 25px;
+    font-size: 20px;
+}
+
+#qs{
+    height: 30px;
+    font-size: 20px;
+    border-radius: 10px  ;
 }
 nav{
     position: fixed;
@@ -124,7 +138,7 @@ a.nav-link,
 .searchForm{
     display: inline-block;
     position: fixed;
-    top: -80px;
+    top: -72px;
     right: 7px;
 
 }
@@ -136,7 +150,7 @@ a.nav-link,
 .floatNav{
     float: right;
     position: fixed;
-    right: 270px;
+    right: 300px;
     margin: 0;
 }
 

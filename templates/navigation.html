@@ -53,10 +53,8 @@
             </div>
             <div class="navbar-nav searchForm">
                 <form action="{{ url_for('search_question') }}">
-                    <label class="" for="q">Search question: </label>
-                    <br>
-                    <input type="text" name="q" id="q">
-                    <button type="submit">Search</button>
+                    <input type="text" name="q" id="q" placeholder="Search question">
+                    <button id="qs" type="submit">Search</button>
                 </form>
             </div>
 
