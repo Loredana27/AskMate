@@ -104,9 +104,20 @@ a.nav-link,
     margin: 16px 8px 8px;
 }
 
+.searchForm{
+    display: inline-block;
+    position: fixed;
+    top: -67px;
+
+}
+
+.searchForm form{
+    display: block;
+}
+
 .floatNav{
     float: right;
-    position: absolute;
+    position: fixed;
     right: 7px;
     margin: 0;
 }

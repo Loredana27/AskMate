@@ -25,6 +25,14 @@
                     >
                 </div>
 
+                <div class="navbar-nav searchForm">
+                    <form action="{{ url_for('search_question') }}">
+                        <label for="q">Search question: </label>
+                        <input type="text" name="q" id="q">
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+
                 <div class="navbar-nav floatNav">
                     <a class="nav-link disabled logout" href="{{ url_for('logout_page') }}">
                         LOG OUT
