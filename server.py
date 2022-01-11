@@ -284,6 +284,19 @@ def list_users_page():
     return render_template("list_users.html", users=users, username=session["username"])
 
 
+@app.route("/user/<user_id>")
+def user_page(user_id):
+    #      if "username" not in session:
+    #         return redirect(url_for('login_page'))
+    user = util.blah_blah(user_id)
+    number_of_questions = database_manager.get_question_number(user_id)
+    number_of_comment = database_manager.get_comment_number(user_id)
+    number_of_answers = database_manager.get_answer_number(user_id)
+    return render_template("user_page.html", user=user, number_of_questions=number_of_questions, number_of_answers=number_of_answers, number_of_comment=number_of_comment)
+
+
+
+
 if __name__ == "__main__":
     app.run(
         port=5000,
