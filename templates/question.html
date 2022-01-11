@@ -173,6 +173,18 @@
                                     Reply
                                 </a>
                             </li>
+                            <li class="floatbutton">
+                                <a
+                                    class="detailbutton"
+                                    href="{{ url_for('answer_accept', answer_id=answer.id)  }}"
+                                >
+                                    {% if answer.accepted %}
+                                    Accepted
+                                    {% else %}
+                                    Not accepted
+                                    {% endif %}
+                                </a>
+                            </li>
                         </ul>
                     </td>
                 </tr>

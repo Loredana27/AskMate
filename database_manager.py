@@ -80,7 +80,8 @@ def update_answer(cursor, answer):
     query = """
                UPDATE answer
                SET message = %(message)s,
-                vote_number = %(vote_number)s
+                vote_number = %(vote_number)s,
+                accepted = %(accepted)s
                WHERE id=%(id)s;"""
     cursor.execute(query, answer)
 
@@ -364,12 +365,12 @@ def get_all_users_questions(cursor):
 
 
 @database_connection.connection_handler
-def insert_user(cursor, username, password):
+def insert_user(cursor, username, password, reputation):
     query = """
-                INSERT INTO users(username, password)
-                VALUES(%(username)s, %(password)s )
+                INSERT INTO users(username, password, reputation)
+                VALUES(%(username)s, %(password)s, %(reputation)s )
                 ;"""
-    cursor.execute(query, {"username": username, "password": password})
+    cursor.execute(query, {"username": username, "password": password, "reputation": reputation})
 
 
 @database_connection.connection_handler
@@ -410,32 +411,44 @@ def get_question_number(cursor, id_user):
 
 @database_connection.connection_handler
 def get_users(cursor):
-    cursor.execute("select u.id, u.username from users u;")
+    cursor.execute("select u.id, u.username, DATE(u.registration_date) AS registration_date from users u;")
     users = cursor.fetchall()
-    print(users)
     cursor.execute("select count(c.id) as comment, c.user_id from comment c group by c.user_id;" )
     comments = cursor.fetchall()
-    print(comments)
     cursor.execute("select count(a.id) as answer, a.user_id from answer a group by a.user_id;" )
     answers = cursor.fetchall()
-    print(answers)
-    cursor.execute("select count(a.id) as question, a.user_id from question a group by a.user_id;" )
+    cursor.execute("select count(a.id) as question, a.user_id from question a group by a.user_id;")
     questions = cursor.fetchall()
-    print(questions)
     for i, u in enumerate(users):
-        comment = [ c.get("comment") for c in comments if c.get("user_id") == u.get("id") ]
+        comment = [c.get("comment") for c in comments if c.get("user_id") == u.get("id")]
         comment = comment.pop() if len(comment) else 0
-
         answer = [c.get("answer") for c in answers if c.get("user_id") == u.get("id")]
         answer = answer.pop() if len(answer) else 0
-
-        question = [ c.get("question") for c in questions if c.get("user_id") == u.get("id") ]
+        question = [c.get("question") for c in questions if c.get("user_id") == u.get("id")]
         question = question.pop() if len(question) else 0
-
         users[i].update({
                 "comments": comment,
                 "answers": answer,
                 "questions": question,
             })
-
     return users
+
+
+@database_connection.connection_handler
+def get_user_by_id(cursor, user_id):
+    query = """
+            SELECT *
+            FROM users
+            WHERE id=%(user_id)s
+            ;"""
+    cursor.execute(query, {"user_id": user_id})
+    return cursor.fetchone()
+
+
+@database_connection.connection_handler
+def update_reputation(cursor, user):
+    query = """
+               UPDATE users
+               SET reputation = %(reputation)s
+               WHERE id=%(id)s;"""
+    cursor.execute(query, user)

@@ -253,6 +253,7 @@ def registration_page():
             database_manager.insert_user(
                 username=request.form.get("reg_username"),
                 password=cryptography.hash_password(password),
+                reputation=0
             )
             return redirect(url_for("login_page"))
     return render_template("registration.html")
@@ -280,8 +281,27 @@ def logout_page():
 @app.route("/list_users")
 def list_users_page():
     users = database_manager.get_users()
-    print(users)
     return render_template("list_users.html", users=users, username=session["username"])
+
+
+@app.route("/answer/<answer_id>/accept")
+def answer_accept(answer_id):
+    answer = database_manager.get_answer_by_id(answer_id)
+    question = database_manager.get_question(answer.get("question_id"))
+    user = database_manager.get_user_by_id(answer.get("user_id"))
+    print(user)
+    print(user.get("reputation") + 15)
+    if question.get("user_id") == session["user_id"]:
+        if answer.get("accepted") is not True:
+            answer.update({"accepted": bool(True)})
+            user.update({"reputation": (int(user.get("reputation")) + 15)})
+        else:
+            answer.update({"accepted": bool(False)})
+            user.update({"reputation": (int(user.get("reputation")) - 15)})
+        database_manager.update_answer(answer)
+        database_manager.update_reputation(user)
+    util.keep_view_question_untouch(answer.get("question_id"))
+    return redirect(url_for("question_page", question_id=answer.get("question_id")))
 
 
 if __name__ == "__main__":
