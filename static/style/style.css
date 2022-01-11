@@ -1,5 +1,8 @@
 body {
     text-align: justify;
+    background-image: url("/static/images/keep_the_ocean_clean-wallpaper-1920x1080.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 header{
     position: absolute;
@@ -7,6 +10,17 @@ header{
     right: 0;
     top: 0;
     margin-bottom: 25px;
+}
+footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #383839;
+    text-align: center;
+}
+footer div h5{
+    color: white;
 }
 nav{
     position: fixed;
