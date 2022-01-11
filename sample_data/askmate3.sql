@@ -14,9 +14,12 @@ create table users
             primary key,
     username          text,
     password          text,
-    registration_date timestamp default CURRENT_TIMESTAMP
+    registration_date timestamp default CURRENT_TIMESTAMP,
+    reputation        integer   default 0
 );
 
+alter table users
+    owner to loredana;
 
 
 create table question
