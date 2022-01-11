@@ -295,6 +295,10 @@ def user_page(user_id):
     return render_template("user_page.html", user=user, number_of_questions=number_of_questions, number_of_answers=number_of_answers, number_of_comment=number_of_comment)
 
 
+@app.route("/tags")
+def tags_page():
+    tags = database_manager.get_tags()
+    return render_template("tag_page.html", tags=tags)
 
 
 if __name__ == "__main__":
