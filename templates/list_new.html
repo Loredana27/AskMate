@@ -3,61 +3,63 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='style/list_questions.css') }}">
 {% endblock %}
 {% block content %}
-<div style="background-color: #2ecc71; width: 72%;position:relative;left: 14%">
-<div>
-    <form action="{{ url_for('sort_by') }}">
-                    <label for="sort_by">Sort by:</label>
-                    <select id="sort_by" name="sort_by">
-                        <option value="id">ID</option>
-                        <option value="title">Title</option>
-                        <option value="submission_time">Submission time</option>
-                        <option value="vote_number">Vote Number</option>
-                    </select>
-                    <label for="order_direction">Order:</label>
-                    <select id="order_direction" name="order_direction">
-                        <option value="asc">ASC</option>
-                        <option value="desc">DESC</option>
-                    </select>
-                    <button type="submit">
-                        Sort questions
-                    </button>
-                </form>
-</div>
-
-<div class="firstdiv"></div>
-{% for question in questions %}
-<div class="questionDiv" style="margin: 10px;background-color: #8c8c8c">
-    <div style="display: inline-flex">
-        <div class="postDetail">
-            <p>Posted by ---question message--- at ---question time---
-                <br>
-                Question's tags ---tags---</p>
-        </div>
-        <div class="voteDiv">
-
-            <a href=""><img src="{{ url_for('static',filename='img/like_button.png') }}" width="30px"></a>
-            <a href=""><img src="{{ url_for('static',filename='img/dislike_button.png') }}" width="28px"></a>
-        </div>
+<div class="mainDiv">
+    <div class="title">
+        <h1>Questions</h1>
+    </div>
+    <div class="sortMenuDiv">
+        <form action="{{ url_for('sort_by') }}">
+                        <label for="sort_by">Sort by:</label>
+                        <select id="sort_by" name="sort_by">
+                            <option value="id">ID</option>
+                            <option value="title">Title</option>
+                            <option value="submission_time">Submission time</option>
+                            <option value="vote_number">Vote Number</option>
+                        </select>
+                        <label for="order_direction">Order:</label>
+                        <select id="order_direction" name="order_direction">
+                            <option value="asc">ASC</option>
+                            <option value="desc">DESC</option>
+                        </select>
+                        <button type="submit">
+                            Sort questions
+                        </button>
+                    </form>
     </div>
 
-    <div>
-        <p>---question title---</p>
-    </div>
-    <div class="messageAndPhoto">
-        <div class="questionMessage">
-            <p>---question message---</p>
+    {% for question in questions %}
+    <div class="questionDiv">
+        <div class="topDetails">
+            <div class="postDetail">
+                <p>Posted by ---username--- at ---question time---
+                    <br>
+                    Question's tags ---tags---</p>
+            </div>
+            <div class="voteDiv">
+
+                <a href=""><img src="{{ url_for('static',filename='img/like_button.png') }}" width="30px"></a>
+                <a href=""><img src="{{ url_for('static',filename='img/dislike_button.png') }}" width="28px"></a>
+            </div>
         </div>
-        <div class="questionImage">
-            <p>---question image---</p>
+
+        <div>
+            <p>---question title---</p>
+        </div>
+        <div class="messageAndPhoto">
+            <div class="questionMessage">
+                <p>---question message---</p>
+            </div>
+            <div class="questionImage">
+                <p>---question image---</p>
+            </div>
+        </div>
+        <div class="questionDetails">
+            <div>--vote score---</div>
+            <div>---views---</div>
+            <div>---answers---</div>
         </div>
     </div>
-    <div class="questionDetails">
-        <div>--vote score---</div>
-        <div>---views---</div>
-        <div>---answers---</div>
-    </div>
-</div>
-{% endfor %}
+    {% endfor %}
 
 </div>
 {% endblock %}

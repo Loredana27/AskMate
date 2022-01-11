@@ -3,6 +3,7 @@ body {
     background-image: url("/static/images/keep_the_ocean_clean-wallpaper-1920x1080.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
+    font-family: 'Playfair Display', serif;
 }
 header{
     position: absolute;
@@ -10,6 +11,7 @@ header{
     right: 0;
     top: 0;
     margin-bottom: 25px;
+    z-index: 5000;
 }
 footer{
     position: fixed;
@@ -18,9 +20,22 @@ footer{
     right: 0;
     background: #383839;
     text-align: center;
+    z-index: 5000;
 }
 footer div h5{
     color: white;
+}
+
+#q{
+    width: 200px;
+    height: 25px;
+    font-size: 20px;
+}
+
+#qs{
+    height: 30px;
+    font-size: 20px;
+    border-radius: 10px  ;
 }
 nav{
     position: fixed;
@@ -32,9 +47,7 @@ nav{
     margin-top: 100px;
 }
 
-form {
-    margin-top: 80px;
-}
+
 nav.navbar.navbar-expand-lg.navbar-light.bg-light,
 .detailsrow,
 .question_table {
@@ -124,9 +137,9 @@ a.nav-link,
 .searchForm{
     display: inline-block;
     position: fixed;
-    top: -80px;
+    top: 8px;
     right: 7px;
-
+    font-family: 'Playfair Display', serif;
 }
 
 .searchForm form{
@@ -136,7 +149,7 @@ a.nav-link,
 .floatNav{
     float: right;
     position: fixed;
-    right: 270px;
+    right: 300px;
     margin: 0;
 }
 
