@@ -64,7 +64,7 @@
 }
 .voteDiv{
     position: absolute;
-    right: 0px;
+    right: 0;
     margin-top: 3px;
     top: 10px;
 }
