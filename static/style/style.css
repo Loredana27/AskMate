@@ -1,14 +1,53 @@
 body {
     text-align: justify;
+    background-image: url("/static/images/keep_the_ocean_clean-wallpaper-1920x1080.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Playfair Display', serif;
 }
-.nav{
-    position: relative;
-    margin: 0;
+header{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin-bottom: 25px;
+    z-index: 5000;
 }
-.firstdiv,
-form {
-    margin-top: 80px;
+footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #383839;
+    text-align: center;
+    z-index: 5000;
 }
+footer div h5{
+    color: white;
+}
+
+#q{
+    width: 200px;
+    height: 25px;
+    font-size: 20px;
+}
+
+#qs{
+    height: 30px;
+    font-size: 20px;
+    border-radius: 10px  ;
+}
+nav{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+.firstdiv{
+    margin-top: 100px;
+}
+
+
 nav.navbar.navbar-expand-lg.navbar-light.bg-light,
 .detailsrow,
 .question_table {
@@ -36,30 +75,33 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light,
 
 .nav-link.disabled.account{
     width: auto;
+    margin-top: 25px;
 }
 
 .nav-link.disabled.logo{
-    width: 170px;
+    width: 110px;
 }
 
 .nav-link.disabled.logout{
      right: 0;
      width: auto;
+    margin-top: 25px;
 }
 
 a.navbar-brand,
 a.nav-link {
     padding: 8px;
+    font-size: 15px;
 }
 
 a.navbar-brand {
     margin: 16px 8px 16px 16px;
-    background-color: darkgray;
-    color: aliceblue;
+    background-color: #383839;
+    color: #ffffff;
     border-radius: 15px;
     padding: 14px;
     font-weight: inherit;
-    font-size: 35px;
+    font-size: 20px;
     font-family: 'Playfair Display', serif;
 }
 
@@ -72,6 +114,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light {
 /* flex */
 .container-fluid,
 nav.navbar.navbar-expand-lg.navbar-light.bg-light {
+
     flex-direction: row;
     flex-wrap: wrap;
     align-content: flex-start;
@@ -87,15 +130,40 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light {
 .detailbutton,
 a.nav-link,
 .navbar-nav {
-    margin: 8px;
+    display: inline;
+    margin: 16px 8px 8px;
+}
 
+.searchForm{
+    display: inline-block;
+    position: fixed;
+    top: 8px;
+    right: 7px;
+    font-family: 'Playfair Display', serif;
+}
+
+.searchForm form{
+    display: block;
+}
+
+.floatNav{
+    float: right;
+    position: fixed;
+    right: 300px;
+    margin: 0;
+}
+
+.pageNav{
+    position: fixed;
+    left: 60px;
 }
 
 a.nav-link {
-    width: 100px;
+    width: 60px;
+    text-align: center;
     float: left;
-    background-color: #8d8c8c;
-    color: aliceblue;
+    background-color: #383839;
+    color: #ffffff;
     border-radius: 10px;
     text-decoration: none;
     font-family: 'Playfair Display', serif;
@@ -111,7 +179,8 @@ a.nav-link.disabled {
 .detailbutton:hover,
 a.navbar-brand:hover,
 a.nav-link:hover {
-    background-color: rgb(185, 185, 185);
+    /*background-color: rgb(255, 255, 255);*/
+    color: rgba(185,185,185,0.55);
 }
 
 .titlequestion {

@@ -8,12 +8,17 @@
     </title>
     {% block head %}
     {% endblock %}
-
-    <link rel="stylesheet" href="{{ url_for('static',filename='style/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='style/style.css') }}">
 </head>
 <body>
+<header>
     {% include 'navigation.html' %}
+</header>
+
+    <div class="firstdiv"></div>
     {% block content %}
     {% endblock %}
+    {% include 'footer.html' %}
+    <div style="height: 60px"></div>
 </body>
 </html>

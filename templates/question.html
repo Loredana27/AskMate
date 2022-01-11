@@ -79,7 +79,7 @@
                     >
                 </td>
                 <td rowspan="2">
-                    {% if question.image %}
+                    {% if question.image != '' %}
                     <img
                         src="{{ url_for('static', filename=question.image) }}"
                         width="20%"

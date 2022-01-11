@@ -304,6 +304,29 @@ def answer_accept(answer_id):
     return redirect(url_for("question_page", question_id=answer.get("question_id")))
 
 
+@app.route("/user/<user_id>")
+def user_page(user_id):
+    #      if "username" not in session:
+    #         return redirect(url_for('login_page'))
+    user = util.blah_blah(user_id)
+    number_of_questions = database_manager.get_question_number(user_id)
+    number_of_comment = database_manager.get_comment_number(user_id)
+    number_of_answers = database_manager.get_answer_number(user_id)
+    return render_template("user_page.html", user=user, number_of_questions=number_of_questions, number_of_answers=number_of_answers, number_of_comment=number_of_comment)
+
+
+@app.route("/demo")
+def demo_page():
+    questions = database_manager.get_questions()
+    questions = util.add_answer_number(questions)
+    questions = util.get_tag_for_questions(questions)
+    return render_template("list_new.html", questions=questions, username=session["username"])
+@app.route("/tags")
+def tags_page():
+    tags = database_manager.get_tags()
+    return render_template("tag_page.html", tags=tags)
+
+
 if __name__ == "__main__":
     app.run(
         port=5000,
