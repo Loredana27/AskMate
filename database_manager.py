@@ -477,3 +477,20 @@ def get_comments_user(cursor, user_id):
     cursor.execute(query, {"user_id": user_id})
     return cursor.fetchall()
 
+@database_connection.connection_handler
+def get_tags(cursor):
+    query = """
+                SELECT id, name, COUNT(question_id)
+                FROM tag, question_tag
+                WHERE id=tag_id
+                GROUP BY id
+                ;"""
+    cursor.execute(query)
+    return cursor.fetchall()
+
+
+
+
+
+
+

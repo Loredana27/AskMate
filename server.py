@@ -301,6 +301,10 @@ def demo_page():
     questions = util.add_answer_number(questions)
     questions = util.get_tag_for_questions(questions)
     return render_template("list_new.html", questions=questions, username=session["username"])
+@app.route("/tags")
+def tags_page():
+    tags = database_manager.get_tags()
+    return render_template("tag_page.html", tags=tags)
 
 
 if __name__ == "__main__":
