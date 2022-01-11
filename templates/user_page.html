@@ -1,6 +1,58 @@
 {% extends "base_template.html" %} {% block title %}List Questions {% endblock %} {% block
 content %}
+    <div class="firstdiv"></div>
 
 
+    <table>
+        {% for question in user.questions %}
+            <tr>
+                <td>
+                    {{ loop.index }}
+                </td>
+                <td>
+                    {{ question.title }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h4>Number of asked questions: {{ number_of_questions.number_of_questions }}</h4>
+
+    <table>
+        {% for answer in user.answers %}
+             <tr>
+                <td>
+                    {{ loop.index }}
+                </td>
+                <td>
+                    {{ answer.message }}
+                </td>
+            </tr>
+
+        {% endfor %}
+    </table>
+
+
+    <h4> Number of answers: {{ number_of_answers.number_of_answers }}</h4>
+
+    <table>
+         {% for comment in user.comments %}
+              <tr>
+                <td>
+                    {{ loop.index }}
+                </td>
+                <td>
+                   {{ comment.message }}
+                </td>
+            </tr>
+          {% endfor %}
+    </table>
+
+
+    <h4> Number of comments: {{ number_of_comment.number_of_comment }}</h4>
+
+    <h4> User ID: {{ user.id }} </h4>
+
+    <h4> Username: {{ user.username }} </h4>
 
 {% endblock %}

@@ -408,7 +408,7 @@ def get_comment_number(cursor, id_user):
                 comment.user_id = %(id_user)s
         ;"""
     cursor.execute(query, {"id_user": id_user})
-    return cursor.fetchall()
+    return cursor.fetchone()
 
 
 @database_connection.connection_handler
@@ -420,7 +420,8 @@ def get_answer_number(cursor, id_user):
             WHERE user_id = %(id_user)s
         ;"""
     cursor.execute(query, {"id_user": id_user})
-    return cursor.fetchall()
+    return cursor.fetchone()
+
 
 @database_connection.connection_handler
 def get_question_number(cursor, id_user):
@@ -430,4 +431,49 @@ def get_question_number(cursor, id_user):
             WHERE user_id = %(id_user)s
         ;"""
     cursor.execute(query, {"id_user": id_user})
+    return cursor.fetchone()
+
+
+@database_connection.connection_handler
+def get_user(cursor, user_id):
+    query = """
+            SELECT *
+            FROM users
+            WHERE id=%(user_id)s
+            ;"""
+    cursor.execute(query, {"user_id": user_id})
+    return cursor.fetchone()
+
+
+@database_connection.connection_handler
+def get_questions_user(cursor, user_id):
+    query = """
+            SELECT *
+            FROM question
+            WHERE user_id=%(user_id)s
+            ;"""
+    cursor.execute(query, {"user_id": user_id})
     return cursor.fetchall()
+
+
+@database_connection.connection_handler
+def get_answers_user(cursor, user_id):
+    query = """
+            SELECT *
+            FROM answer
+            WHERE user_id=%(user_id)s
+            ;"""
+    cursor.execute(query, {"user_id": user_id})
+    return cursor.fetchall()
+
+
+@database_connection.connection_handler
+def get_comments_user(cursor, user_id):
+    query = """
+            SELECT *
+            FROM comment
+            WHERE user_id=%(user_id)s
+            ;"""
+    cursor.execute(query, {"user_id": user_id})
+    return cursor.fetchall()
+
