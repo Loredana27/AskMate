@@ -1,0 +1,31 @@
+.questionDiv{
+
+}
+
+.postDetail{
+
+}
+
+
+.questionMessage{
+    display: inline-block;
+    width: 70%!important;
+}
+
+.questionImage{
+    display: inline-block;
+    width: 29%!important;
+}
+
+.questionDetails{
+    display: inline-flex;
+}
+
+.questionDetails div{
+    margin: 5px;
+}
+.voteDiv{
+    position: absolute;
+    right: 20px;
+    margin-top: 3px;
+}

@@ -295,6 +295,12 @@ def user_page(user_id):
     return render_template("user_page.html", user=user, number_of_questions=number_of_questions, number_of_answers=number_of_answers, number_of_comment=number_of_comment)
 
 
+@app.route("/demo")
+def demo_page():
+    questions = database_manager.get_questions()
+    questions = util.add_answer_number(questions)
+    questions = util.get_tag_for_questions(questions)
+    return render_template("list_new.html", questions=questions, username=session["username"])
 
 
 if __name__ == "__main__":
