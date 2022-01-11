@@ -279,8 +279,8 @@ def logout_page():
 
 @app.route("/list_users")
 def list_users_page():
-    users = database_manager.get_all_users()
-
+    users = database_manager.get_users()
+    print(users)
     return render_template("list_users.html", users=users, username=session["username"])
 
 
