@@ -483,16 +483,6 @@ def get_question_number(cursor, id_user):
     return cursor.fetchone()
 
 
-@database_connection.connection_handler
-def get_user(cursor, user_id):
-    query = """
-            SELECT *
-            FROM users
-            WHERE id=%(user_id)s
-            ;"""
-    cursor.execute(query, {"user_id": user_id})
-    return cursor.fetchone()
-
 
 @database_connection.connection_handler
 def get_questions_user(cursor, user_id):
@@ -587,3 +577,5 @@ def get_user_by_id(cursor, user_id):
             ;"""
     cursor.execute(query, {"user_id": user_id})
     return cursor.fetchone()
+
+
