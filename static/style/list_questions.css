@@ -4,6 +4,18 @@
 .title{
     text-align: center;
 }
+.title2{
+    position: relative;
+    left: 20px;
+    font-weight: bold;
+}
+.titleDiv{
+    background-color: rgba(147,147,147,0.35);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-bottom: 0;
+    font-size: 25px;
+}
 
 .sortMenuDiv{
     /*padding: 10px;*/
@@ -47,7 +59,6 @@
 
 .questionMessage{
     display: inline-block;
-    width: 70%!important;
 }
 
 .questionImage{
@@ -67,4 +78,9 @@
     right: 0;
     margin-top: 3px;
     top: 10px;
+}
+
+.messageAndPhoto{
+    margin-top: 0;
+    background-color: rgba(255,255,255,0.65);
 }

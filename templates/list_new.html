@@ -31,9 +31,13 @@
     <div class="questionDiv">
         <div class="topDetails">
             <div class="postDetail">
-                <p>Posted by ---username--- at ---question time---
+                <p>Posted by {{ question.username }} at {{ question.submission_time }}
                     <br>
-                    Question's tags ---tags---</p>
+                    Question's tags
+                    {% for tag in question.tags %}
+                        {{ tag.name }}
+                    {% endfor %}
+                </p>
             </div>
             <div class="voteDiv">
 
@@ -41,17 +45,22 @@
                 <a href=""><img src="{{ url_for('static',filename='img/dislike_button.png') }}" width="28px"></a>
             </div>
         </div>
-
-        <div>
-            <p>---question title---</p>
-        </div>
         <div class="messageAndPhoto">
-            <div class="questionMessage">
-                <p>---question message---</p>
+            <div class="titleDiv">
+                <p class="title2">{{ question.title }}</p>
             </div>
-            <div class="questionImage">
-                <p>---question image---</p>
+            <div class="questionMessage"
+                {% if question.image != '' %}
+                    style="width: 70%!important;"
+                {% endif %}
+            >
+                <p>{{ question.message }}</p>
             </div>
+            {% if question.image != '' %}
+                <div class="questionImage">
+                    <p>---question image---</p>
+                </div>
+            {% endif %}
         </div>
         <div class="questionDetails">
             <div>--vote score---</div>

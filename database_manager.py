@@ -1,21 +1,34 @@
+import datetime
+
 import database_connection
 
 
 @database_connection.connection_handler
 def add_question(cursor, title, message, image, user_id):
+    submission_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
     query = """
-            INSERT INTO question(title, message, image,user_id) 
-            VALUES (%(title)s, %(message)s, %(image)s, %(user_id)s );"""
-    cursor.execute(query, {"title": title, "message": message, "image": image, "user_id": user_id})
+            INSERT INTO question(title, message, image,user_id, submission_time) 
+            VALUES (%(title)s, %(message)s, %(image)s, %(user_id)s, %(submission_time)s);"""
+    cursor.execute(
+        query, {"title": title, "message": message, "image": image, "user_id": user_id, "submission_time":submission_time}
+    )
 
 
 @database_connection.connection_handler
 def add_answer(cursor, question_id, message, image, user_id):
+    submission_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
     query = """
-            INSERT INTO answer(question_id, message, image, user_id) 
-            VALUES (%(question_id)s, %(message)s, %(image)s, %(user_id)s );"""
+            INSERT INTO answer(question_id, message, image, user_id, submission_time) 
+            VALUES (%(question_id)s, %(message)s, %(image)s, %(user_id)s, %(submission_time)s);"""
     cursor.execute(
-        query, {"question_id": question_id, "message": message, "image": image, "user_id": user_id}
+        query,
+        {
+            "question_id": question_id,
+            "message": message,
+            "image": image,
+            "user_id": user_id,
+            "submission_time": submission_time
+        },
     )
 
 
@@ -23,7 +36,9 @@ def add_answer(cursor, question_id, message, image, user_id):
 def get_questions(cursor):
     query = """
             SELECT * 
-            FROM question
+            FROM question,users
+            WHERE users.id=question.user_id
+            ORDER BY question.id DESC
             ;"""
     cursor.execute(query)
     return cursor.fetchall()
@@ -136,18 +151,30 @@ def get_answer_seq_value(cursor):
 
 @database_connection.connection_handler
 def add_comment_question(cursor, message, question_id, user_id):
+    submission_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
     query = """
-            INSERT INTO comment(message, question_id, user_id) 
-            VALUES (%(message)s, %(question_id)s, %(user_id)s);"""
-    cursor.execute(query, {"message": message, "question_id": question_id, "user_id": user_id})
+            INSERT INTO comment(message, question_id, user_id, submission_time) 
+            VALUES (%(message)s, %(question_id)s, %(user_id)s, %(submission_time)s);"""
+    cursor.execute(
+        query,
+        {
+            "message": message,
+            "question_id": question_id,
+            "user_id": user_id,
+            "submission_time": submission_time,
+        },
+    )
 
 
 @database_connection.connection_handler
 def add_comment_answer(cursor, message, answer_id, user_id):
+    submission_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
     query = """
-            INSERT INTO comment(message, answer_id, user_id) 
-            VALUES (%(message)s, %(answer_id)s, %(user_id)s);"""
-    cursor.execute(query, {"message": message, "answer_id": answer_id, "user_id": user_id})
+            INSERT INTO comment(message, answer_id, user_id, submission_time) 
+            VALUES (%(message)s, %(answer_id)s, %(user_id)s, %(submission_time)s);"""
+    cursor.execute(
+        query, {"message": message, "answer_id": answer_id, "user_id": user_id, "submission_time": submission_time}
+    )
 
 
 @database_connection.connection_handler
@@ -366,41 +393,58 @@ def get_all_users_questions(cursor):
 
 @database_connection.connection_handler
 def get_users(cursor):
-    cursor.execute("select u.id, u.username, DATE(u.registration_date) AS registration_date from users u;")
+    cursor.execute(
+        "select u.id, u.username, DATE(u.registration_date) AS registration_date from users u;"
+    )
     users = cursor.fetchall()
     print(users)
-    cursor.execute("select count(c.id) as comment, c.user_id from comment c group by c.user_id;" )
+    cursor.execute(
+        "select count(c.id) as comment, c.user_id from comment c group by c.user_id;"
+    )
     comments = cursor.fetchall()
     print(comments)
-    cursor.execute("select count(a.id) as answer, a.user_id from answer a group by a.user_id;" )
+    cursor.execute(
+        "select count(a.id) as answer, a.user_id from answer a group by a.user_id;"
+    )
     answers = cursor.fetchall()
-    cursor.execute("select count(a.id) as question, a.user_id from question a group by a.user_id;" )
+    cursor.execute(
+        "select count(a.id) as question, a.user_id from question a group by a.user_id;"
+    )
     questions = cursor.fetchall()
     for i, u in enumerate(users):
-        comment = [c.get("comment") for c in comments if c.get("user_id") == u.get("id") ]
+        comment = [
+            c.get("comment") for c in comments if c.get("user_id") == u.get("id")
+        ]
         comment = comment.pop() if len(comment) else 0
 
         answer = [c.get("answer") for c in answers if c.get("user_id") == u.get("id")]
         answer = answer.pop() if len(answer) else 0
 
-        question = [ c.get("question") for c in questions if c.get("user_id") == u.get("id") ]
+        question = [
+            c.get("question") for c in questions if c.get("user_id") == u.get("id")
+        ]
         question = question.pop() if len(question) else 0
 
-        users[i].update({
+        users[i].update(
+            {
                 "comments": comment,
                 "answers": answer,
                 "questions": question,
-            })
+            }
+        )
     return users
 
 
 @database_connection.connection_handler
 def insert_user(cursor, username, password, reputation):
+    registration_date = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
     query = """
-                INSERT INTO users(username, password, reputation)
-                VALUES(%(username)s, %(password)s, %(reputation)s )
+                INSERT INTO users(username, password, reputation, registration_date)
+                VALUES(%(username)s, %(password)s, %(reputation)s, %(registration_date)s )
                 ;"""
-    cursor.execute(query, {"username": username, "password": password, "reputation": reputation})
+    cursor.execute(
+        query, {"username": username, "password": password, "reputation": reputation, "registration_date": registration_date}
+    )
 
 
 @database_connection.connection_handler
@@ -426,7 +470,6 @@ def get_answer_number(cursor, id_user):
         ;"""
     cursor.execute(query, {"id_user": id_user})
     return cursor.fetchone()
-
 
 
 @database_connection.connection_handler
@@ -483,6 +526,7 @@ def get_comments_user(cursor, user_id):
     cursor.execute(query, {"user_id": user_id})
     return cursor.fetchall()
 
+
 @database_connection.connection_handler
 def get_tags(cursor):
     query = """
@@ -497,26 +541,40 @@ def get_tags(cursor):
 
 @database_connection.connection_handler
 def get_users(cursor):
-    cursor.execute("select u.id, u.username, DATE(u.registration_date) AS registration_date from users u;")
+    cursor.execute(
+        "select u.id, u.username, DATE(u.registration_date) AS registration_date from users u;"
+    )
     users = cursor.fetchall()
-    cursor.execute("select count(c.id) as comment, c.user_id from comment c group by c.user_id;" )
+    cursor.execute(
+        "select count(c.id) as comment, c.user_id from comment c group by c.user_id;"
+    )
     comments = cursor.fetchall()
-    cursor.execute("select count(a.id) as answer, a.user_id from answer a group by a.user_id;" )
+    cursor.execute(
+        "select count(a.id) as answer, a.user_id from answer a group by a.user_id;"
+    )
     answers = cursor.fetchall()
-    cursor.execute("select count(a.id) as question, a.user_id from question a group by a.user_id;")
+    cursor.execute(
+        "select count(a.id) as question, a.user_id from question a group by a.user_id;"
+    )
     questions = cursor.fetchall()
     for i, u in enumerate(users):
-        comment = [c.get("comment") for c in comments if c.get("user_id") == u.get("id")]
+        comment = [
+            c.get("comment") for c in comments if c.get("user_id") == u.get("id")
+        ]
         comment = comment.pop() if len(comment) else 0
         answer = [c.get("answer") for c in answers if c.get("user_id") == u.get("id")]
         answer = answer.pop() if len(answer) else 0
-        question = [c.get("question") for c in questions if c.get("user_id") == u.get("id")]
+        question = [
+            c.get("question") for c in questions if c.get("user_id") == u.get("id")
+        ]
         question = question.pop() if len(question) else 0
-        users[i].update({
+        users[i].update(
+            {
                 "comments": comment,
                 "answers": answer,
                 "questions": question,
-            })
+            }
+        )
     return users
 
 
