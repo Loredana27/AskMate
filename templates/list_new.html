@@ -33,9 +33,9 @@
             <div class="postDetail">
                 <p>Posted by {{ question.username }} at {{ question.submission_time }}
                     <br>
-                    Question's tags
+                    Tags
                     {% for tag in question.tags %}
-                        {{ tag.name }}
+                        <a href="/demo">{{ tag.name }}</a>
                     {% endfor %}
                 </p>
             </div>
@@ -45,27 +45,55 @@
                 <a href=""><img src="{{ url_for('static',filename='img/dislike_button.png') }}" width="28px"></a>
             </div>
         </div>
+    <hr>
         <div class="messageAndPhoto">
             <div class="titleDiv">
-                <p class="title2">{{ question.title }}</p>
+                <a
+                href="{{ url_for('question_page', question_id=question.id) }}"
+                class="title2">
+                    {% if search_term %}
+                        {% for word in question.title.split(" ") %}
+                            {% if search_term in word.lower() %}
+                            <mark>{{ word }}</mark>
+                            {%  else %}
+                            {{ word }}
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {{ question.title }}
+                    {% endif %}
+                </a>
             </div>
             <div class="questionMessage"
-                {% if question.image != '' %}
+                {% if question.image != '' and question.image != None %}
                     style="width: 70%!important;"
                 {% endif %}
             >
-                <p>{{ question.message }}</p>
+                <p>
+                    {% if search_term %}
+                        {% for word in question.message.split(" ") %}
+                            {% if search_term in word.lower() %}
+                            <mark>{{ word }}</mark>
+                            {%  else %}
+                            {{ word }}
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {{ question.message }}
+                    {% endif %}
+                </p>
             </div>
-            {% if question.image != '' %}
+            {% if question.image != '' and question.image != None %}
                 <div class="questionImage">
-                    <p>---question image---</p>
+                    <p><img src="{{ url_for('static',filename=question.image) }}" width="100%"></p>
                 </div>
             {% endif %}
         </div>
+    <hr>
         <div class="questionDetails">
-            <div>--vote score---</div>
-            <div>---views---</div>
-            <div>---answers---</div>
+            <div>Score: {{ question.vote_number }}</div>
+            <div>Views: {{ question.view_number }}</div>
+            <div>Answers: {{ question.answer_number }}</div>
         </div>
     </div>
     {% endfor %}

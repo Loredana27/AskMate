@@ -359,7 +359,7 @@ def demo_page():
     questions = database_manager.get_questions()
     questions = util.add_answer_number(questions)
     questions = util.get_tag_for_questions(questions)
-    print(questions)
+    print(len(questions))
     return render_template(
         "list_new.html", questions=questions, username=session["username"]
     )
