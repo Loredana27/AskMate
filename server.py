@@ -21,7 +21,7 @@ def main_page():
     print(database_manager.get_answer_number(session["user_id"]))
     print(database_manager.get_comment_number(session["user_id"]))
     return render_template(
-        "list.html", questions=first_five, username=session["username"]
+        "list_new.html", questions=first_five, username=session["username"]
     )
 
 
@@ -31,7 +31,7 @@ def list_page():
     questions = util.add_answer_number(questions)
     questions = util.get_tag_for_questions(questions)
     return render_template(
-        "list.html", questions=questions, username=session["username"]
+        "list_new.html", questions=questions, username=session["username"]
     )
 
 
@@ -207,7 +207,7 @@ def search_question():
     questions = util.add_answer_number(questions)
     questions = util.get_tag_for_questions(questions)
     return render_template(
-        "list.html",
+        "list_new.html",
         questions=questions,
         search_term=search_term,
         username=session["username"],
@@ -268,7 +268,7 @@ def sort_by():
         request.args.get("sort_by"), request.args.get("order_direction")
     )
     return render_template(
-        "list.html", questions=questions, username=session["username"]
+        "list_new.html", questions=questions, username=session["username"]
     )
 
 
@@ -339,8 +339,8 @@ def answer_accept(answer_id):
 
 @app.route("/user/<user_id>")
 def user_page(user_id):
-    #      if "username" not in session:
-    #         return redirect(url_for('login_page'))
+    if "username" not in session:
+        return redirect(url_for('login_page'))
     user = util.blah_blah(user_id)
     number_of_questions = database_manager.get_question_number(user_id)
     number_of_comment = database_manager.get_comment_number(user_id)
