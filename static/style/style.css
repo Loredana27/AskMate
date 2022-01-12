@@ -73,6 +73,11 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light,
     width: 80%;
 }
 
+.nav-link.active{
+    text-align: center;
+    vertical-align: center;
+}
+
 .nav-link.disabled.account{
     width: auto;
     margin-top: 25px;

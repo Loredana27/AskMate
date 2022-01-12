@@ -27,16 +27,37 @@ function getSortedItems(items, sortField, sortDirection) {
 function getFilteredItems(items, filterValue) {
     console.log(items)
     console.log(filterValue)
-
     // === SAMPLE CODE ===
     // if you have not changed the original html uncomment the code below to have an idea of the
     // effect this function has on the table
     //
-    for (let i=0; i<filterValue.length; i++) {
-        items.pop()
+    const test_reverse = "!:"
+    let reverse = false
+    if (filterValue[0]=="!") {
+        reverse = true
+        filterValue = filterValue.substring(1)
     }
-
-    return items
+    let reverse_filtered_items = items
+    console.log(items)
+    let filtered_items = []
+    for (let i=0; i<items.length; i++) {
+        if ((items[i]["Title"].includes(filterValue) || items[i]["Description"].includes(filterValue)) && !reverse) {
+            filtered_items.push(items[i])
+        } else if (items[i]["Title"].includes(filterValue) || items[i]["Description"].includes(filterValue)) {
+            delete reverse_filtered_items[i]
+        }
+    }
+    let refined_reverse = []
+    if (reverse) {
+        for (let index=0; index<reverse_filtered_items.length; index++){
+            if (reverse_filtered_items[index]) {
+                refined_reverse.push(reverse_filtered_items[index])
+            }
+        }
+        return refined_reverse
+    } else {
+        return filtered_items
+    }
 }
 
 function toggleTheme() {

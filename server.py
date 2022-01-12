@@ -322,8 +322,6 @@ def answer_accept(answer_id):
     answer = database_manager.get_answer_by_id(answer_id)
     question = database_manager.get_question_by_id(answer.get("question_id"))
     user = database_manager.get_user_by_id(answer.get("user_id"))
-    print(user)
-    print(user.get("reputation") + 15)
     if question.get("user_id") == session["user_id"]:
         if answer.get("accepted") is not True:
             answer.update({"accepted": bool(True)})
