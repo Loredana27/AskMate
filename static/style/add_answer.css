@@ -11,17 +11,18 @@ label{
     font-size: 20px;
 }
 
-input{
+
+#image {
     font-size: 20px;
 }
 
-textarea{
+#answer, #question_message, #question_title, #tag, #comment_message{
     background-color: rgba(0, 0, 0, 0.41);
     color: white;
     font-size: 20px;
 }
 
-button{
+#submit{
     background-color: rgba(0, 0, 0, 0.47);
     color: white;
     margin: 10px;

@@ -228,6 +228,7 @@ def get_latest_five_questions(cursor):
     query = """
         SELECT question.id, submission_time, view_number, vote_number, title, message, image, user_id, username, password, registration_date, reputation
         FROM question, users
+        WHERE user_id=users.id  
         ORDER BY id DESC  
             ;"""
     cursor.execute(query)
