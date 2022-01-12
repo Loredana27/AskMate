@@ -35,7 +35,7 @@ def add_answer(cursor, question_id, message, image, user_id):
 @database_connection.connection_handler
 def get_questions(cursor):
     query = """
-            SELECT * 
+            SELECT question.id as id, submission_time, view_number, vote_number, title, message, image, user_id, username, password, registration_date, reputation
             FROM question,users
             WHERE users.id=question.user_id
             ORDER BY question.id DESC
@@ -45,11 +45,12 @@ def get_questions(cursor):
 
 
 @database_connection.connection_handler
-def get_question(cursor, id):
+def get_question_by_id(cursor, id):
     query = """
-            SELECT * 
-            FROM question
-            WHERE id = %(id)s;
+            SELECT question.id as id, submission_time, view_number, vote_number, title, message, image, user_id, username, password, registration_date, reputation
+            FROM question,users
+            WHERE users.id=question.user_id
+                AND question.id = %(id)s;
             """
     cursor.execute(query, {"id": int(id)})
     return cursor.fetchone()
@@ -71,9 +72,9 @@ def update_question(cursor, question):
 @database_connection.connection_handler
 def get_answers_for_question(cursor, question):
     query = """
-            SELECT * 
-            FROM answer
-            WHERE question_id = %(id)s
+            SELECT answer.id as id, submission_time, vote_number, question_id, message, image, user_id, accepted, username, password, registration_date, reputation
+            FROM answer, users
+            WHERE question_id = %(id)s AND users.id = user_id
             ;"""
     cursor.execute(query, {"id": int(question["id"])})
     return cursor.fetchall()
@@ -82,9 +83,9 @@ def get_answers_for_question(cursor, question):
 @database_connection.connection_handler
 def get_answer_by_id(cursor, answer_id):
     query = """
-                SELECT * 
-                FROM answer
-                WHERE id = %(id)s
+            SELECT answer.id as id, submission_time, vote_number, question_id, message, image, user_id, accepted, username, password, registration_date, reputation
+            FROM answer, users
+            WHERE answer.id = %(id)s AND users.id = user_id
                 ;"""
     cursor.execute(query, {"id": int(answer_id)})
     return cursor.fetchone()

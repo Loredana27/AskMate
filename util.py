@@ -47,7 +47,7 @@ def add_comments_to_answer(answer):
 
 
 def keep_view_question_untouch(question_id):
-    question = database_manager.get_question(question_id)
+    question = database_manager.get_question_by_id(question_id)
     question.update({"view_number": int(question.get("view_number")) - 1})
     database_manager.update_question(question)
     return question
