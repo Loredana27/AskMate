@@ -37,7 +37,7 @@ def list_page():
 
 @app.route("/question/<question_id>")
 def question_page(question_id):
-    question = database_manager.get_question(question_id)
+    question = database_manager.get_question_by_id(question_id)
     question.update({"view_number": question["view_number"] + 1})
     database_manager.update_question(question)
     question = util.add_answers_to_question(question)
@@ -78,7 +78,7 @@ def add_answer_page(question_id):
 
 @app.route("/question/<question_id>/edit", methods=["GET", "POST"])
 def edit_question_page(question_id):
-    question = database_manager.get_question(question_id)
+    question = database_manager.get_question_by_id(question_id)
     if request.method == "POST":
         question.update(
             {
@@ -118,7 +118,7 @@ def delete_question(question_id):
 
 @app.route("/question/<question_id>/vote-up")
 def question_vote_up(question_id):
-    question = database_manager.get_question(question_id)
+    question = database_manager.get_question_by_id(question_id)
     question.update(
         {
             "vote_number": int(question.get("vote_number")) + 1,
@@ -131,7 +131,7 @@ def question_vote_up(question_id):
 
 @app.route("/question/<question_id>/vote-down")
 def question_vote_down(question_id):
-    question = database_manager.get_question(question_id)
+    question = database_manager.get_question_by_id(question_id)
     question.update(
         {
             "vote_number": int(question.get("vote_number")) - 1,
@@ -320,7 +320,7 @@ def list_users_page():
 @app.route("/answer/<answer_id>/accept")
 def answer_accept(answer_id):
     answer = database_manager.get_answer_by_id(answer_id)
-    question = database_manager.get_question(answer.get("question_id"))
+    question = database_manager.get_question_by_id(answer.get("question_id"))
     user = database_manager.get_user_by_id(answer.get("user_id"))
     print(user)
     print(user.get("reputation") + 15)
