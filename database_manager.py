@@ -226,8 +226,8 @@ def get_question_by_search(cursor, search_term):
 @database_connection.connection_handler
 def get_latest_five_questions(cursor):
     query = """
-        SELECT *
-        FROM question
+        SELECT question.id, submission_time, view_number, vote_number, title, message, image, user_id, username, password, registration_date, reputation
+        FROM question, users
         ORDER BY id DESC  
             ;"""
     cursor.execute(query)
@@ -237,9 +237,9 @@ def get_latest_five_questions(cursor):
 @database_connection.connection_handler
 def get_answer_comments(cursor, answer):
     query = """
-            SELECT *
-            FROM comment
-            WHERE answer_id = %(id)s
+            SELECT comment.id as id, question_id, answer_id, message, submission_time, edited_count, user_id, username, password, registration_date, reputation
+            FROM comment, users
+            WHERE answer_id = %(id)s AND comment.user_id = users.id
             ;"""
     cursor.execute(query, answer)
     return cursor.fetchall()
@@ -248,9 +248,9 @@ def get_answer_comments(cursor, answer):
 @database_connection.connection_handler
 def get_question_comments(cursor, question):
     query = """
-            SELECT *
-            FROM comment
-            WHERE question_id = %(id)s
+            SELECT comment.id as id, question_id, answer_id, message, submission_time, edited_count, user_id, username, password, registration_date, reputation
+            FROM comment, users
+            WHERE question_id = %(id)s  AND comment.user_id=users.id
             ;"""
     cursor.execute(query, question)
     return cursor.fetchall()
@@ -289,16 +289,6 @@ def get_tag_by_name(cursor, tag_name):
     cursor.execute(query, {"name": tag_name})
     return cursor.fetchone()
 
-
-@database_connection.connection_handler
-def get_tag_by_id(cursor, tag_id):
-    query = """
-            SELECT *
-            FROM tag 
-            WHERE id = %(id)s
-                ;"""
-    cursor.execute(query, {"id": tag_id})
-    return cursor.fetchone()
 
 
 @database_connection.connection_handler
@@ -354,24 +344,6 @@ def get_user(cursor, username):
             ;"""
     cursor.execute(query, {"username": username})
     return cursor.fetchone()
-
-
-@database_connection.connection_handler
-def get_all_users_questions(cursor):
-    query = """
-            SELECT username,   
-            DATE(registration_date) AS registration_date,
-            COUNT(question.id) AS questions,
-            COUNT(answer.id) AS answers,
-            COUNT(comment.id) AS comments
-            FROM users
-            INNER JOIN question on users.id = question.user_id
-            INNER JOIN answer on users.id = answer.user_id
-            INNER JOIN comment on users.id = comment.user_id
-            GROUP BY username, DATE(registration_date)
-            """
-    cursor.execute(query)
-    return cursor.fetchall()
 
 
 @database_connection.connection_handler
@@ -485,7 +457,7 @@ def get_question_number(cursor, id_user):
 
 
 @database_connection.connection_handler
-def get_user(cursor, user_id):
+def get_user_by_id(cursor, user_id):
     query = """
             SELECT *
             FROM users
@@ -579,12 +551,4 @@ def get_users(cursor):
     return users
 
 
-@database_connection.connection_handler
-def get_user_by_id(cursor, user_id):
-    query = """
-            SELECT *
-            FROM users
-            WHERE id=%(user_id)s
-            ;"""
-    cursor.execute(query, {"user_id": user_id})
-    return cursor.fetchone()
+
