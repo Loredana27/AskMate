@@ -1,0 +1,33 @@
+label{
+    font-size: 30px;
+    font-family: sans-serif;
+    font-weight: bold;
+    margin: 10px;
+}
+
+::-webkit-file-upload-button{
+    background: rgba(0, 0, 0, 0.48);
+    color: white;
+    font-size: 20px;
+}
+
+input{
+    font-size: 20px;
+}
+
+textarea{
+    background-color: rgba(0, 0, 0, 0.41);
+    color: white;
+    font-size: 20px;
+}
+
+button{
+    background-color: rgba(0, 0, 0, 0.47);
+    color: white;
+    margin: 10px;
+    font-size: 20px;
+}
+
+form{
+    font-size: 20px;
+}
