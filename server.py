@@ -407,17 +407,6 @@ def user_page(user_id):
     )
 
 
-@app.route("/demo")
-def demo_page():
-    questions = database_manager.get_questions()
-    questions = util.add_answer_number(questions)
-    questions = util.get_tag_for_questions(questions)
-    print(len(questions))
-    return render_template(
-        "list_new.html", questions=questions, username=session["username"]
-    )
-
-
 @app.route("/tags")
 def tags_page():
     tags = database_manager.get_tags()
