@@ -15,7 +15,7 @@
         <div class="userQuestions">
             <h4>Number of asked questions: {{ number_of_questions.number_of_questions }}</h4>
             {% for question in user.questions %}
-                <a href="{{ url_for('question_page',question_id=question.question_id) }}"
+                <a href="{{ url_for('question_page',question_id=question.id) }}"
                 >{{ loop.index }}. {{ question.title }}</a><br>
             {% endfor %}
         </div>

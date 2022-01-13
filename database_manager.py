@@ -544,3 +544,12 @@ def get_answer_for_comment(cursor, comment_id):
     cursor.execute(query, {"comment_id": comment_id})
     cursor.fetchone()
 
+
+@database_connection.connection_handler
+def get_questions_by_tag_id(cursor, tag_id):
+    query = """
+        SELECT * FROM question
+        WHERE id in (SELECT question_id FROM question_tag WHERE tag_id=%(tag_id)s)
+            ;"""
+    cursor.execute(query, {"tag_id": tag_id})
+    return cursor.fetchall()

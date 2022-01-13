@@ -37,6 +37,17 @@ def list_page():
     )
 
 
+@app.route("/list/tag/<tag_id>")
+def list_tag_questions_page(tag_id):
+    questions = database_manager.get_questions_by_tag_id(tag_id)
+    questions = util.add_answer_number(questions)
+    questions = util.get_tag_for_questions(questions)
+    return render_template(
+        "list_new.html", questions=questions, username=session["username"],
+        user_id=session["user_id"]
+    )
+
+
 @app.route("/question/<question_id>")
 def question_page(question_id):
     question = database_manager.get_question_by_id(question_id)
