@@ -309,7 +309,7 @@ def add_tag_page(question_id):
 @app.route("/question/<question_id>/tag/<tag_id>/delete-tag")
 def delete_tag_page(question_id, tag_id):
     database_manager.delete_tag_relation(question_id, tag_id)
-    return redirect(url_for("list_page"))
+    return redirect(url_for("question_page", question_id=question_id))
 
 
 @app.route("/sort_by")
@@ -404,17 +404,6 @@ def user_page(user_id):
         number_of_comment=number_of_comment,
         username=session["username"],
         user_id=session["user_id"]
-    )
-
-
-@app.route("/demo")
-def demo_page():
-    questions = database_manager.get_questions()
-    questions = util.add_answer_number(questions)
-    questions = util.get_tag_for_questions(questions)
-    print(len(questions))
-    return render_template(
-        "list_new.html", questions=questions, username=session["username"]
     )
 
 
