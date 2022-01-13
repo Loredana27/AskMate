@@ -35,14 +35,14 @@
                     <br>
                     Tags
                     {% for tag in question.tags %}
-                        <a href="/demo">{{ tag.name }}</a>
+                        <a href="{{ url_for('list_tag_questions_page', tag_id=tag.id) }}">{{ tag.name }}</a>
                     {% endfor %}
                 </p>
             </div>
             <div class="voteDiv">
 
-                <a href=""><img src="{{ url_for('static',filename='img/like_button.png') }}" width="30px"></a>
-                <a href=""><img src="{{ url_for('static',filename='img/dislike_button.png') }}" width="28px"></a>
+                <a href="{{ url_for('question_vote_up', question_id=question.id) }}"><img src="{{ url_for('static',filename='img/like_button.png') }}" width="30px"></a>
+                <a href="{{ url_for('question_vote_down', question_id=question.id) }}"><img src="{{ url_for('static',filename='img/dislike_button.png') }}" width="28px"></a>
             </div>
         </div>
     <hr>

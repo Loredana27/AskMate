@@ -11,14 +11,15 @@
                     <br>
                     Tags
                     {% for tag in question.tags %}
-                        <a href="/demo">{{ tag.name }}</a>
+                        <a href="{{ url_for('list_tag_questions_page', tag_id=tag.id) }}">{{ tag.name }}</a>
+                        <a href="{{ url_for('delete_tag_page', question_id=question.id, tag_id=tag.id) }}"><sub>[X]</sub></a>
                     {% endfor %}
                 </p>
             </div>
             <div class="voteDiv">
 
-                <a href=""><img src="{{ url_for('static',filename='img/like_button.png') }}" width="30px"></a>
-                <a href=""><img src="{{ url_for('static',filename='img/dislike_button.png') }}" width="28px"></a>
+                <a href="{{ url_for('question_vote_up', question_id=question.id) }}"><img src="{{ url_for('static',filename='img/like_button.png') }}" width="30px"></a>
+                <a href="{{ url_for('question_vote_down', question_id=question.id) }}"><img src="{{ url_for('static',filename='img/dislike_button.png') }}" width="28px"></a>
             </div>
         </div>
     <hr>
@@ -70,12 +71,32 @@
             <div>Score: {{ question.vote_number }}</div>
             <div>Views: {{ question.view_number }}</div>
             <div>Answers: {{ question.answer_number }}</div>
+
+        <div class="detailsrow">
+            <ul class="detailnavbar">
+               <li class="floatbutton">
+                   <a class="detailbutton" href="{{ url_for('edit_question_page', question_id=question.id) }}">Edit</a>
+               </li>
+                <li class="floatbutton">
+                   <a class="detailbutton" href="{{ url_for('delete_question', question_id=question.id) }}">Delete</a>
+               </li>
+                <li class="floatbutton">
+                   <a class="detailbutton" href="{{ url_for('add_tag_page', question_id=question.id) }}">Add tag</a>
+               </li>
+            </ul>
+        </div>
         </div>
     </div>
     <div class="commentDiv">
             {% for comment in question.comments %}
 {#                <div class="comment_div">#}
                     <table class="comment_table">
+                        <tr>
+                            <td>
+                                Posted by: {{ comment.username }} on {{ comment.submission_time }}
+                                <hr>
+                            </td>
+                        </tr>
                         <tr>
                             <td><p class="comment_p">{{ comment.message }}</p></td>
                         </tr>
@@ -84,7 +105,6 @@
                                 <ul class="detailnavbar">
                                     <hr>
                                     <li>{{ comment.edited_count }} times edited</li>
-                                    <li>Submission time: {{ comment.submission_time }}</li>
                                     <li class="floatbutton">
                                         <a
                                             href="{{ url_for('delete_comment_page', comment_id=comment.id ) }}"
@@ -112,6 +132,12 @@
         <div class="answerDiv">
         <div class="seconddiv">
             <table class="question_table">
+                <tr>
+                    <td>
+                        Posted by: {{ answer.username }} on {{ answer.submission_time }}
+                    <hr>
+                    </td>
+                </tr>
                 <tr>
                     <td class="question_title">
                         <p class="questionmessage">{{ answer.message }}</p>
@@ -189,9 +215,16 @@
             </table>
         </div>
         </div>
+        <div class="commentDiv">
             {% for comment in answer.comments %}
 
                     <table class="comment_table">
+                    <tr>
+                        <td>
+                            Posted by: {{ comment.username }} on {{ comment.submission_date }}
+                            <hr>
+                        </td>
+                    </tr>
                         <tr>
                             <td>{{ comment.message }}</td>
                         </tr>
@@ -199,6 +232,7 @@
                         <tr class="detailsrow">
                             <td>
                                 <ul class="detailnavbar">
+                                    <hr>
                                     <li>{{ comment.edited_count }} times edited</li>
                                     <li>Submission time: {{ comment.submission_time }}</li>
                                     <li class="floatbutton">
@@ -221,6 +255,7 @@
                     </table>
 
             {% endfor %}
+            </div>
     {% endfor %}
     <a
         class="addanswerbutton"
