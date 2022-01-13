@@ -44,7 +44,7 @@
                 <a class="nav-link disabled logout" href="{{ url_for('logout_page') }}">
                     LOG OUT
                 </a>
-                <a class="nav-link disabled account">
+                <a class="nav-link disabled account" href="{{ url_for('user_page',user_id=user_id) }}">
                     {{ username }}
                 </a>
                 <a class="nav-link disabled logo" style="float: right"

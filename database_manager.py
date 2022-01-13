@@ -5,7 +5,7 @@ import database_connection
 
 @database_connection.connection_handler
 def add_question(cursor, title, message, image, user_id):
-    submission_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
+    submission_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     query = """
             INSERT INTO question(title, message, image,user_id, submission_time) 
             VALUES (%(title)s, %(message)s, %(image)s, %(user_id)s, %(submission_time)s);"""
@@ -23,7 +23,7 @@ def add_question(cursor, title, message, image, user_id):
 
 @database_connection.connection_handler
 def add_answer(cursor, question_id, message, image, user_id):
-    submission_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
+    submission_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     query = """
             INSERT INTO answer(question_id, message, image, user_id, submission_time) 
             VALUES (%(question_id)s, %(message)s, %(image)s, %(user_id)s, %(submission_time)s);"""
@@ -159,7 +159,7 @@ def get_answer_seq_value(cursor):
 
 @database_connection.connection_handler
 def add_comment_question(cursor, message, question_id, user_id):
-    submission_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
+    submission_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     query = """
             INSERT INTO comment(message, question_id, user_id, submission_time) 
             VALUES (%(message)s, %(question_id)s, %(user_id)s, %(submission_time)s);"""
@@ -176,7 +176,7 @@ def add_comment_question(cursor, message, question_id, user_id):
 
 @database_connection.connection_handler
 def add_comment_answer(cursor, message, answer_id, user_id):
-    submission_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
+    submission_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     query = """
             INSERT INTO comment(message, answer_id, user_id, submission_time) 
             VALUES (%(message)s, %(answer_id)s, %(user_id)s, %(submission_time)s);"""
@@ -390,7 +390,7 @@ def get_all_users_questions(cursor):
 
 @database_connection.connection_handler
 def insert_user(cursor, username, password, reputation):
-    registration_date = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
+    registration_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     query = """
                 INSERT INTO users(username, password, reputation, registration_date)
                 VALUES(%(username)s, %(password)s, %(reputation)s, %(registration_date)s )
@@ -544,3 +544,23 @@ def update_reputation(cursor, user):
                SET reputation = %(reputation)s
                WHERE id=%(id)s;"""
     cursor.execute(query, user)
+
+
+@database_connection.connection_handler
+def get_answer_for_comment(cursor, comment_id):
+    query = """
+        SELECT * FROM answer
+        WHERE id = (SELECT answer_id FROM comment WHERE comment.id=%(comment_id)s)
+            ;"""
+    cursor.execute(query, {"comment_id": comment_id})
+    cursor.fetchone()
+
+
+@database_connection.connection_handler
+def get_questions_by_tag_id(cursor, tag_id):
+    query = """
+        SELECT * FROM question
+        WHERE id in (SELECT question_id FROM question_tag WHERE tag_id=%(tag_id)s)
+            ;"""
+    cursor.execute(query, {"tag_id": tag_id})
+    return cursor.fetchall()

@@ -21,7 +21,8 @@ def main_page():
     print(database_manager.get_answer_number(session["user_id"]))
     print(database_manager.get_comment_number(session["user_id"]))
     return render_template(
-        "list_new.html", questions=first_five, username=session["username"]
+        "list_new.html", questions=first_five, username=session["username"],
+        user_id=session["user_id"]
     )
 
 
@@ -31,7 +32,19 @@ def list_page():
     questions = util.add_answer_number(questions)
     questions = util.get_tag_for_questions(questions)
     return render_template(
-        "list_new.html", questions=questions, username=session["username"]
+        "list_new.html", questions=questions, username=session["username"],
+        user_id=session["user_id"]
+    )
+
+
+@app.route("/list/tag/<tag_id>")
+def list_tag_questions_page(tag_id):
+    questions = database_manager.get_questions_by_tag_id(tag_id)
+    questions = util.add_answer_number(questions)
+    questions = util.get_tag_for_questions(questions)
+    return render_template(
+        "list_new.html", questions=questions, username=session["username"],
+        user_id=session["user_id"]
     )
 
 
@@ -44,7 +57,23 @@ def question_page(question_id):
     question = util.add_comments_to_question(question)
     question = util.get_tag_for_question(question)
     return render_template(
-        "question.html", question=question, username=session["username"]
+        "question.html", question=question, username=session["username"],
+        user_id=session["user_id"]
+    )
+
+
+@app.route("/question/<comment_id>")
+def question_page_from_answer_comment(comment_id):
+    answer = database_manager.get_answer_for_comment(comment_id)
+    question = database_manager.get_question_by_id(answer["question_id"])
+    question.update({"view_number": question["view_number"] + 1})
+    database_manager.update_question(question)
+    question = util.add_answers_to_question(question)
+    question = util.add_comments_to_question(question)
+    question = util.get_tag_for_question(question)
+    return render_template(
+        "question.html", question=question, username=session["username"],
+        user_id=session["user_id"]
     )
 
 
@@ -58,7 +87,8 @@ def add_question_page():
             user_id=session["user_id"],
         )
         return redirect(url_for("list_page"))
-    return render_template("add_question.html", username=session["username"])
+    return render_template("add_question.html", username=session["username"],
+        user_id=session["user_id"])
 
 
 @app.route("/question/<question_id>/new-answer", methods=["GET", "POST"])
@@ -72,7 +102,8 @@ def add_answer_page(question_id):
         )
         return redirect(url_for("question_page", question_id=question_id))
     return render_template(
-        "add_answer.html", question_id=question_id, username=session["username"]
+        "add_answer.html", question_id=question_id, username=session["username"],
+        user_id=session["user_id"]
     )
 
 
@@ -89,7 +120,8 @@ def edit_question_page(question_id):
         database_manager.update_question(question)
         return redirect(url_for("question_page", question_id=question_id))
     return render_template(
-        "edit_question.html", question=question, username=session["username"]
+        "edit_question.html", question=question, username=session["username"],
+        user_id=session["user_id"]
     )
 
 
@@ -106,7 +138,8 @@ def edit_answer_page(answer_id):
             )
         )
     return render_template(
-        "edit_answer.html", answer=answer, username=session["username"]
+        "edit_answer.html", answer=answer, username=session["username"],
+        user_id=session["user_id"]
     )
 
 
@@ -193,6 +226,7 @@ def add_question_comment_page(question_id):
         "add_question_comment.html",
         question_id=question_id,
         username=session["username"],
+        user_id=session["user_id"]
     )
 
 
@@ -207,7 +241,8 @@ def add_answer_comment_page(answer_id):
         )
         return redirect(url_for("question_page", question_id=answer.get("question_id")))
     return render_template(
-        "add_answer_comment.html", answer_id=answer_id, username=session["username"]
+        "add_answer_comment.html", answer_id=answer_id, username=session["username"],
+        user_id=session["user_id"]
     )
 
 
@@ -223,6 +258,7 @@ def search_question():
         questions=questions,
         search_term=search_term,
         username=session["username"],
+        user_id=session["user_id"]
     )
 
 
@@ -241,7 +277,8 @@ def edit_comment_page(comment_id):
             )
         )
     return render_template(
-        "edit_comment.html", comment=comment, username=session["username"]
+        "edit_comment.html", comment=comment, username=session["username"],
+        user_id=session["user_id"]
     )
 
 
@@ -264,7 +301,8 @@ def add_tag_page(question_id):
         )
         return redirect(url_for("question_page", question_id=question_id))
     return render_template(
-        "add_tag.html", question_id=question_id, username=session["username"]
+        "add_tag.html", question_id=question_id, username=session["username"],
+        user_id=session["user_id"]
     )
 
 
@@ -280,14 +318,16 @@ def sort_by():
         request.args.get("sort_by"), request.args.get("order_direction")
     )
     return render_template(
-        "list_new.html", questions=questions, username=session["username"]
+        "list_new.html", questions=questions, username=session["username"],
+        user_id=session["user_id"]
     )
 
 
 @app.route("/bonus-questions")
 def bonus_questions_page():
     return render_template(
-        "bonus_questions.html", questions=SAMPLE_QUESTIONS, username=session["username"]
+        "bonus_questions.html", questions=SAMPLE_QUESTIONS, username=session["username"],
+        user_id=session["user_id"]
     )
 
 
@@ -326,7 +366,8 @@ def logout_page():
 @app.route("/list_users")
 def list_users_page():
     users = database_manager.get_users()
-    return render_template("list_users.html", users=users, username=session["username"])
+    return render_template("list_users.html", users=users, username=session["username"],
+        user_id=session["user_id"])
 
 
 @app.route("/answer/<answer_id>/accept")
@@ -361,6 +402,8 @@ def user_page(user_id):
         number_of_questions=number_of_questions,
         number_of_answers=number_of_answers,
         number_of_comment=number_of_comment,
+        username=session["username"],
+        user_id=session["user_id"]
     )
 
 
@@ -378,7 +421,7 @@ def demo_page():
 @app.route("/tags")
 def tags_page():
     tags = database_manager.get_tags()
-    return render_template("tag_page.html", tags=tags,username=session["username"])
+    return render_template("tag_page.html", tags=tags, username=session["username"])
 
 
 if __name__ == "__main__":

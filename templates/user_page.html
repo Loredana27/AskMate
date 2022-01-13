@@ -1,58 +1,44 @@
-{% extends "base_template.html" %} {% block title %}List Questions {% endblock %} {% block
-content %}
+{% extends "base_template.html" %}
+{% block title %} {{ user.username }} {% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='style/user_page.css') }}">
+{% endblock %}
+{% block content %}
     <div class="firstdiv"></div>
 
-
-    <table>
-        {% for question in user.questions %}
-            <tr>
-                <td>
-                    {{ loop.index }}
-                </td>
-                <td>
-                    {{ question.title }}
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
-
-    <h4>Number of asked questions: {{ number_of_questions.number_of_questions }}</h4>
-
-    <table>
-        {% for answer in user.answers %}
-             <tr>
-                <td>
-                    {{ loop.index }}
-                </td>
-                <td>
-                    {{ answer.message }}
-                </td>
-            </tr>
-
-        {% endfor %}
-    </table>
-
-
-    <h4> Number of answers: {{ number_of_answers.number_of_answers }}</h4>
-
-    <table>
-         {% for comment in user.comments %}
-              <tr>
-                <td>
-                    {{ loop.index }}
-                </td>
-                <td>
-                   {{ comment.message }}
-                </td>
-            </tr>
-          {% endfor %}
-    </table>
-
-
-    <h4> Number of comments: {{ number_of_comment.number_of_comment }}</h4>
-
-    <h4> User ID: {{ user.id }} </h4>
-
-    <h4> Username: {{ user.username }} </h4>
+    <div class="mainDiv">
+        <div class="userDetails">
+            <h2>Username: {{ user.username }}</h2>
+            <h2>User id: {{ user_id }}</h2>
+        </div>
+            <hr>
+        <div class="userQuestions">
+            <h4>Number of asked questions: {{ number_of_questions.number_of_questions }}</h4>
+            {% for question in user.questions %}
+                <a href="{{ url_for('question_page',question_id=question.id) }}"
+                >{{ loop.index }}. {{ question.title }}</a><br>
+            {% endfor %}
+        </div>
+            <hr>
+        <div class="userAnswers">
+            <h4> Number of answers: {{ number_of_answers.number_of_answers }}</h4>
+            {% for answer in user.answers %}
+                <a href="{{ url_for('question_page',question_id=answer.question_id) }}"
+                >{{ loop.index }}. {{ answer.message }}</a><br>
+            {% endfor %}
+        </div>
+            <hr>
+        <div class="userComments">
+            <h4> Number of comments: {{ number_of_comment.number_of_comment }}</h4>
+            {% for comment in user.comments %}
+                {% if question_id in comment %}
+                    <a href="{{ url_for('question_page',question_id=comment.question_id) }}">
+                {% else %}
+                    <a href="{{ url_for('question_page_from_answer_comment',comment_id=comment.id) }}">
+                {% endif %}
+                  {{ loop.index }}. {{ comment.message }}</a><br>
+            {% endfor %}
+        </div>
+    </div>
 
 {% endblock %}

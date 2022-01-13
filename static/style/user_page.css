@@ -1,0 +1,35 @@
+.mainDiv{
+    position: relative;
+    left: 20%;
+    width: 60%;
+    background-color: rgba(255,255,255,0.5);
+
+}
+
+.userDetails{
+    text-align: center;
+}
+
+.userQuestions{
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.userAnswers{
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.userComments{
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+h4{
+    font-size: 25px;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}

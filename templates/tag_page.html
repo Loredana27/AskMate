@@ -5,66 +5,9 @@
 {% block content %}
     <div class="mainDiv">
         {% for tag in tags%}
-            <a href="">
+            <a href="{{ url_for('list_tag_questions_page',tag_id=tag.id) }}">
                 {{ tag.name}} : {{ tag.count }}
             </a>
-
-
-
-            <a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a><a href="">
-                {{ tag.name}} : {{ tag.count }}
-            </a>
-
-
-
-
-
         {% endfor %}
     </div>
 
