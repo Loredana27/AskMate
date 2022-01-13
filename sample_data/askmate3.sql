@@ -18,9 +18,6 @@ create table users
     reputation        integer   default 0
 );
 
-alter table users
-    owner to loredana;
-
 
 create table question
 (
@@ -91,14 +88,14 @@ create table question_tag
         primary key (question_id, tag_id)
 );
 
-INSERT INTO public.users (id, username, password, registration_date) VALUES (1, 'loredanastefania1227@gmail.com', '$2b$12$yAW5I9h2jy7o7iVpNwgVf.rGQ3v50UpU//6SByfYZ9bJ0TGCed9Cu', '2022-01-10 12:15:26.700693');
-INSERT INTO public.users (id, username, password, registration_date) VALUES (2, 'loredsna', '$2b$12$rD6ChBN54RHLDhUEWXSWN.NhOpPrIwtX0oktHeFSilmiodZXtpv9i', '2022-01-10 14:58:44.277744');
+INSERT INTO public.users ( username, password, registration_date) VALUES ( 'loredanastefania1227@gmail.com', '$2b$12$yAW5I9h2jy7o7iVpNwgVf.rGQ3v50UpU//6SByfYZ9bJ0TGCed9Cu', '2022-01-10 12:15:26.700693');
+INSERT INTO public.users ( username, password, registration_date) VALUES ( 'loredsna', '$2b$12$rD6ChBN54RHLDhUEWXSWN.NhOpPrIwtX0oktHeFSilmiodZXtpv9i', '2022-01-10 14:58:44.277744');
 
-INSERT INTO public.question (id, submission_time, view_number, vote_number, title, message, image, user_id) VALUES (2, '2017-05-01 10:41:00.000000', 1364, 57, 'Drawing canvas with an image picked with Cordova Camera Plugin', 'I''m getting an image from device and drawing a canvas with filters using Pixi JS. It works all well using computer to get an image. But when I''m on IOS, it throws errors such as cross origin issue, or that I''m trying to use an unknown format.
-', null, null);
-INSERT INTO public.question (id, submission_time, view_number, vote_number, title, message, image, user_id) VALUES (3, '2022-01-10 15:09:01.775544', 0, 0, 'hdhd', 'hedyrtu', '', 1);
-INSERT INTO public.question (id, submission_time, view_number, vote_number, title, message, image, user_id) VALUES (0, '2017-04-28 08:29:00.000000', 29, 7, 'How to make lists in Python?', 'I am totally new to this, any hints?', null, 1);
-INSERT INTO public.question (id, submission_time, view_number, vote_number, title, message, image, user_id) VALUES (1, '2017-04-29 09:19:00.000000', 15, 9, 'Wordpress loading multiple jQuery Versions', 'I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $(".myBook").booklet();
+INSERT INTO public.question (submission_time, view_number, vote_number, title, message, image, user_id) VALUES ( '2017-05-01 10:41:00.000000', 1364, 57, 'Drawing canvas with an image picked with Cordova Camera Plugin', 'I''m getting an image from device and drawing a canvas with filters using Pixi JS. It works all well using computer to get an image. But when I''m on IOS, it throws errors such as cross origin issue, or that I''m trying to use an unknown format.
+', null, 2);
+INSERT INTO public.question (submission_time, view_number, vote_number, title, message, image, user_id) VALUES ( '2022-01-10 15:09:01.775544', 0, 0, 'hdhd', 'hedyrtu', '', 1);
+INSERT INTO public.question (submission_time, view_number, vote_number, title, message, image, user_id) VALUES ( '2017-04-28 08:29:00.000000', 29, 7, 'How to make lists in Python?', 'I am totally new to this, any hints?', null, 1);
+INSERT INTO public.question (submission_time, view_number, vote_number, title, message, image, user_id) VALUES ( '2017-04-29 09:19:00.000000', 15, 9, 'Wordpress loading multiple jQuery Versions', 'I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $(".myBook").booklet();
 
 I could easy managing the loading order with wp_enqueue_script so first I load jquery then I load booklet so everything is fine.
 
@@ -107,15 +104,15 @@ BUT in my theme i also using jquery via webpack so the loading order is now foll
 jquery
 booklet
 app.js (bundled file with webpack, including jquery)', 'images/image1.png', 1);
-INSERT INTO public.answer (id, submission_time, vote_number, question_id, message, image, user_id, accepted) VALUES (2, '2017-04-25 14:42:00.000000', 35, 1, 'Look it up in the Python docs', 'images/image2.jpg', 1, null);
-INSERT INTO public.answer (id, submission_time, vote_number, question_id, message, image, user_id, accepted) VALUES (1, '2017-04-28 16:49:00.000000', 4, 1, 'You need to use brackets: my_list = []', null, 1, null);
-INSERT INTO public.comment (id, question_id, answer_id, message, submission_time, edited_count, user_id) VALUES (2, null, 1, 'I think you could use my_list = list() as well.', '2017-05-02 16:55:00.000000', 0, 1);
-INSERT INTO public.comment (id, question_id, answer_id, message, submission_time, edited_count, user_id) VALUES (1, 0, null, 'Please clarify the question as it is too vague!', '2017-05-01 05:49:00.000000', 0, 1);
-INSERT INTO public.tag (id, name) VALUES (1, 'python');
-INSERT INTO public.tag (id, name) VALUES (2, 'sql');
-INSERT INTO public.tag (id, name) VALUES (3, 'css');
-INSERT INTO public.question_tag (question_id, tag_id) VALUES (0, 1);
-INSERT INTO public.question_tag (question_id, tag_id) VALUES (1, 3);
+INSERT INTO public.answer (submission_time, vote_number, question_id, message, image, user_id, accepted) VALUES ('2017-04-25 14:42:00.000000', 35, 1, 'Look it up in the Python docs', 'images/image2.jpg', 1, null);
+INSERT INTO public.answer (submission_time, vote_number, question_id, message, image, user_id, accepted) VALUES ('2017-04-28 16:49:00.000000', 4, 1, 'You need to use brackets: my_list = []', null, 1, null);
+INSERT INTO public.comment (question_id, answer_id, message, submission_time, edited_count, user_id) VALUES ( null, 1, 'I think you could use my_list = list() as well.', '2017-05-02 16:55:00.000000', 0, 1);
+INSERT INTO public.comment (question_id, answer_id, message, submission_time, edited_count, user_id) VALUES ( 1, null, 'Please clarify the question as it is too vague!', '2017-05-01 05:49:00.000000', 0, 1);
+INSERT INTO public.tag (name) VALUES ( 'python');
+INSERT INTO public.tag (name) VALUES ( 'sql');
+INSERT INTO public.tag (name) VALUES ('css');
+INSERT INTO public.question_tag (question_id, tag_id) VALUES (1, 1);
 INSERT INTO public.question_tag (question_id, tag_id) VALUES (2, 3);
+INSERT INTO public.question_tag (question_id, tag_id) VALUES (3, 3);
 
 

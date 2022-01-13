@@ -1,21 +1,32 @@
+import datetime
+
 import database_connection
 
 
 @database_connection.connection_handler
 def add_question(cursor, title, message, image, user_id):
+    submission_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
     query = """
-            INSERT INTO question(title, message, image,user_id) 
-            VALUES (%(title)s, %(message)s, %(image)s, %(user_id)s );"""
+            INSERT INTO question(title, message, image,user_id, submission_time) 
+            VALUES (%(title)s, %(message)s, %(image)s, %(user_id)s, %(submission_time)s);"""
     cursor.execute(
-        query, {"title": title, "message": message, "image": image, "user_id": user_id}
+        query,
+        {
+            "title": title,
+            "message": message,
+            "image": image,
+            "user_id": user_id,
+            "submission_time": submission_time,
+        },
     )
 
 
 @database_connection.connection_handler
 def add_answer(cursor, question_id, message, image, user_id):
+    submission_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
     query = """
-            INSERT INTO answer(question_id, message, image, user_id) 
-            VALUES (%(question_id)s, %(message)s, %(image)s, %(user_id)s );"""
+            INSERT INTO answer(question_id, message, image, user_id, submission_time) 
+            VALUES (%(question_id)s, %(message)s, %(image)s, %(user_id)s, %(submission_time)s);"""
     cursor.execute(
         query,
         {
@@ -23,6 +34,7 @@ def add_answer(cursor, question_id, message, image, user_id):
             "message": message,
             "image": image,
             "user_id": user_id,
+            "submission_time": submission_time,
         },
     )
 
@@ -30,19 +42,22 @@ def add_answer(cursor, question_id, message, image, user_id):
 @database_connection.connection_handler
 def get_questions(cursor):
     query = """
-            SELECT * 
-            FROM question
+            SELECT question.id as id, submission_time, view_number, vote_number, title, message, image, user_id, username, password, registration_date, reputation
+            FROM question,users
+            WHERE users.id=question.user_id
+            ORDER BY question.id DESC
             ;"""
     cursor.execute(query)
     return cursor.fetchall()
 
 
 @database_connection.connection_handler
-def get_question(cursor, id):
+def get_question_by_id(cursor, id):
     query = """
-            SELECT * 
-            FROM question
-            WHERE id = %(id)s;
+            SELECT question.id as id, submission_time, view_number, vote_number, title, message, image, user_id, username, password, registration_date, reputation
+            FROM question,users
+            WHERE users.id=question.user_id
+                AND question.id = %(id)s;
             """
     cursor.execute(query, {"id": int(id)})
     return cursor.fetchone()
@@ -64,9 +79,9 @@ def update_question(cursor, question):
 @database_connection.connection_handler
 def get_answers_for_question(cursor, question):
     query = """
-            SELECT * 
-            FROM answer
-            WHERE question_id = %(id)s
+            SELECT answer.id as id, submission_time, vote_number, question_id, message, image, user_id, accepted, username, password, registration_date, reputation
+            FROM answer, users
+            WHERE question_id = %(id)s AND users.id = user_id
             ;"""
     cursor.execute(query, {"id": int(question["id"])})
     return cursor.fetchall()
@@ -75,9 +90,9 @@ def get_answers_for_question(cursor, question):
 @database_connection.connection_handler
 def get_answer_by_id(cursor, answer_id):
     query = """
-                SELECT * 
-                FROM answer
-                WHERE id = %(id)s
+            SELECT answer.id as id, submission_time, vote_number, question_id, message, image, user_id, accepted, username, password, registration_date, reputation
+            FROM answer, users
+            WHERE answer.id = %(id)s AND users.id = user_id
                 ;"""
     cursor.execute(query, {"id": int(answer_id)})
     return cursor.fetchone()
@@ -144,21 +159,35 @@ def get_answer_seq_value(cursor):
 
 @database_connection.connection_handler
 def add_comment_question(cursor, message, question_id, user_id):
+    submission_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
     query = """
-            INSERT INTO comment(message, question_id, user_id) 
-            VALUES (%(message)s, %(question_id)s, %(user_id)s);"""
+            INSERT INTO comment(message, question_id, user_id, submission_time) 
+            VALUES (%(message)s, %(question_id)s, %(user_id)s, %(submission_time)s);"""
     cursor.execute(
-        query, {"message": message, "question_id": question_id, "user_id": user_id}
+        query,
+        {
+            "message": message,
+            "question_id": question_id,
+            "user_id": user_id,
+            "submission_time": submission_time,
+        },
     )
 
 
 @database_connection.connection_handler
 def add_comment_answer(cursor, message, answer_id, user_id):
+    submission_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
     query = """
-            INSERT INTO comment(message, answer_id, user_id) 
-            VALUES (%(message)s, %(answer_id)s, %(user_id)s);"""
+            INSERT INTO comment(message, answer_id, user_id, submission_time) 
+            VALUES (%(message)s, %(answer_id)s, %(user_id)s, %(submission_time)s);"""
     cursor.execute(
-        query, {"message": message, "answer_id": answer_id, "user_id": user_id}
+        query,
+        {
+            "message": message,
+            "answer_id": answer_id,
+            "user_id": user_id,
+            "submission_time": submission_time,
+        },
     )
 
 
@@ -210,8 +239,9 @@ def get_question_by_search(cursor, search_term):
 @database_connection.connection_handler
 def get_latest_five_questions(cursor):
     query = """
-        SELECT *
-        FROM question
+        SELECT question.id, submission_time, view_number, vote_number, title, message, image, user_id, username, password, registration_date, reputation
+        FROM question, users
+        WHERE user_id=users.id  
         ORDER BY id DESC  
             ;"""
     cursor.execute(query)
@@ -221,9 +251,9 @@ def get_latest_five_questions(cursor):
 @database_connection.connection_handler
 def get_answer_comments(cursor, answer):
     query = """
-            SELECT *
-            FROM comment
-            WHERE answer_id = %(id)s
+            SELECT comment.id as id, question_id, answer_id, message, submission_time, edited_count, user_id, username, password, registration_date, reputation
+            FROM comment, users
+            WHERE answer_id = %(id)s AND comment.user_id = users.id
             ;"""
     cursor.execute(query, answer)
     return cursor.fetchall()
@@ -232,9 +262,9 @@ def get_answer_comments(cursor, answer):
 @database_connection.connection_handler
 def get_question_comments(cursor, question):
     query = """
-            SELECT *
-            FROM comment
-            WHERE question_id = %(id)s
+            SELECT comment.id as id, question_id, answer_id, message, submission_time, edited_count, user_id, username, password, registration_date, reputation
+            FROM comment, users
+            WHERE question_id = %(id)s  AND comment.user_id=users.id
             ;"""
     cursor.execute(query, question)
     return cursor.fetchall()
@@ -359,31 +389,20 @@ def get_all_users_questions(cursor):
 
 
 @database_connection.connection_handler
-def get_all_users_questions(cursor):
-    query = """
-            SELECT username,   
-            DATE(registration_date) AS registration_date,
-            COUNT(question.id) AS questions,
-            COUNT(answer.id) AS answers,
-            COUNT(comment.id) AS comments
-            FROM users
-            INNER JOIN question on users.id = question.user_id
-            INNER JOIN answer on users.id = answer.user_id
-            INNER JOIN comment on users.id = comment.user_id
-            GROUP BY username, DATE(registration_date)
-            """
-    cursor.execute(query)
-    return cursor.fetchall()
-
-
-@database_connection.connection_handler
 def insert_user(cursor, username, password, reputation):
+    registration_date = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
     query = """
-                INSERT INTO users(username, password, reputation)
-                VALUES(%(username)s, %(password)s, %(reputation)s )
+                INSERT INTO users(username, password, reputation, registration_date)
+                VALUES(%(username)s, %(password)s, %(reputation)s, %(registration_date)s )
                 ;"""
     cursor.execute(
-        query, {"username": username, "password": password, "reputation": reputation}
+        query,
+        {
+            "username": username,
+            "password": password,
+            "reputation": reputation,
+            "registration_date": registration_date,
+        },
     )
 
 
@@ -424,7 +443,7 @@ def get_question_number(cursor, id_user):
 
 
 @database_connection.connection_handler
-def get_user(cursor, user_id):
+def get_user_by_id(cursor, user_id):
     query = """
             SELECT *
             FROM users
@@ -516,17 +535,6 @@ def get_users(cursor):
             }
         )
     return users
-
-
-@database_connection.connection_handler
-def get_user_by_id(cursor, user_id):
-    query = """
-            SELECT *
-            FROM users
-            WHERE id=%(user_id)s
-            ;"""
-    cursor.execute(query, {"user_id": user_id})
-    return cursor.fetchone()
 
 
 @database_connection.connection_handler

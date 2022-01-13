@@ -1,6 +1,71 @@
 {% extends "base_template.html" %} {% block title %} {% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='style/tag_page.css') }}">
+{% endblock %}
 {% block content %}
-    {% for tag in tags%}
-    {{ tag.name}} : {{ tag.count }}
-    {% endfor %}
+    <div class="mainDiv">
+        {% for tag in tags%}
+            <a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a>
+
+
+
+            <a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a><a href="">
+                {{ tag.name}} : {{ tag.count }}
+            </a>
+
+
+
+
+
+        {% endfor %}
+    </div>
+
 {% endblock %}

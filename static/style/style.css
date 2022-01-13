@@ -1,9 +1,9 @@
 body {
     text-align: justify;
-    background-image: url("/static/images/keep_the_ocean_clean-wallpaper-1920x1080.jpg");
+    background-image: url("/static/img/keep_the_ocean_clean-wallpaper-1920x1080.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
-    font-family: 'Verdana', serif;
+    font-family: 'Verdana', sans-serif;
 }
 header{
     position: absolute;
@@ -73,6 +73,11 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light,
     width: 80%;
 }
 
+.nav-link.active{
+    text-align: center;
+    vertical-align: center;
+}
+
 .nav-link.disabled.account{
     width: auto;
     margin-top: 25px;
@@ -102,7 +107,7 @@ a.navbar-brand {
     padding: 14px;
     font-weight: inherit;
     font-size: 20px;
-    font-family: 'Verdana', serif;
+    font-family: 'Verdana', sans-serif;
 }
 
 /* inline flex */
@@ -139,7 +144,7 @@ a.nav-link,
     position: fixed;
     top: 8px;
     right: 7px;
-    font-family: 'Verdana', serif;
+    font-family: 'Verdana', sans-serif;
 }
 
 .searchForm form{
@@ -166,7 +171,7 @@ a.nav-link {
     color: #ffffff;
     border-radius: 10px;
     text-decoration: none;
-    font-family: 'Verdana', serif;
+    font-family: 'Verdana', sans-serif;
     text-wrap: normal;
 }
 

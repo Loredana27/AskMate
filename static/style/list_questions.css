@@ -4,6 +4,26 @@
 .title{
     text-align: center;
 }
+.title2{
+    position: relative;
+    overflow-wrap: break-word;
+    font-weight: bold;
+    /*text-decoration: underline solid #2ecc71 3px;*/
+    color: black;
+    text-decoration: none;
+}
+.titleDiv{
+    /*background-color: rgba(147,147,147,0.35);*/
+    /*border-top-left-radius: 10px;*/
+    /*border-top-right-radius: 10px;*/
+    position: relative;
+    left: 20px;
+    width: 95%;
+    margin: 0;
+    font-size: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 
 .sortMenuDiv{
     /*padding: 10px;*/
@@ -31,28 +51,35 @@
 
 .questionDiv{
     margin: 10px;
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 20px;
 }
 .topDetails{
-    display: inline-flex;
+    display: block;
     position: relative;
-    left: 50px;
-    width: 93%;
+    left: 20px;
+    width: 96%;
 }
 .postDetail{
-
+    top: 10px;
+    position: relative;
 }
 
 
 .questionMessage{
     display: inline-block;
-    width: 70%!important;
+    text-align: justify-all;
+    vertical-align: top;
+    margin: 1.5%;
+}
+
+.postDetail a{
+    color: rgba(0, 116, 180, 0.8);
 }
 
 .questionImage{
     display: inline-block;
-    width: 29%!important;
+    width: 26%!important;
 }
 
 .questionDetails{
@@ -60,11 +87,25 @@
 }
 
 .questionDetails div{
-    margin: 5px;
+    margin: 5px 5px 5px 0;
+    position: relative;
+    left: 20px
 }
 .voteDiv{
     position: absolute;
-    right: 0px;
+    right: 0;
     margin-top: 3px;
     top: 10px;
+}
+
+.messageAndPhoto{
+    margin-top: 0;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    /*background-color: rgba(255,255,255,0.65);*/
+}
+hr{
+    width: 96%;
+    position: center;
+
 }

@@ -21,7 +21,7 @@ def main_page():
     print(database_manager.get_answer_number(session["user_id"]))
     print(database_manager.get_comment_number(session["user_id"]))
     return render_template(
-        "list.html", questions=first_five, username=session["username"]
+        "list_new.html", questions=first_five, username=session["username"]
     )
 
 
@@ -31,13 +31,13 @@ def list_page():
     questions = util.add_answer_number(questions)
     questions = util.get_tag_for_questions(questions)
     return render_template(
-        "list.html", questions=questions, username=session["username"]
+        "list_new.html", questions=questions, username=session["username"]
     )
 
 
 @app.route("/question/<question_id>")
 def question_page(question_id):
-    question = database_manager.get_question(question_id)
+    question = database_manager.get_question_by_id(question_id)
     question.update({"view_number": question["view_number"] + 1})
     database_manager.update_question(question)
     question = util.add_answers_to_question(question)
@@ -78,7 +78,7 @@ def add_answer_page(question_id):
 
 @app.route("/question/<question_id>/edit", methods=["GET", "POST"])
 def edit_question_page(question_id):
-    question = database_manager.get_question(question_id)
+    question = database_manager.get_question_by_id(question_id)
     if request.method == "POST":
         question.update(
             {
@@ -118,7 +118,7 @@ def delete_question(question_id):
 
 @app.route("/question/<question_id>/vote-up")
 def question_vote_up(question_id):
-    question = database_manager.get_question(question_id)
+    question = database_manager.get_question_by_id(question_id)
     user = database_manager.get_user_by_id(question.get("user_id"))
     question.update(
         {
@@ -134,7 +134,7 @@ def question_vote_up(question_id):
 
 @app.route("/question/<question_id>/vote-down")
 def question_vote_down(question_id):
-    question = database_manager.get_question(question_id)
+    question = database_manager.get_question_by_id(question_id)
     user = database_manager.get_user_by_id(question.get("user_id"))
     question.update(
         {
@@ -219,7 +219,7 @@ def search_question():
     questions = util.add_answer_number(questions)
     questions = util.get_tag_for_questions(questions)
     return render_template(
-        "list.html",
+        "list_new.html",
         questions=questions,
         search_term=search_term,
         username=session["username"],
@@ -280,7 +280,7 @@ def sort_by():
         request.args.get("sort_by"), request.args.get("order_direction")
     )
     return render_template(
-        "list.html", questions=questions, username=session["username"]
+        "list_new.html", questions=questions, username=session["username"]
     )
 
 
@@ -332,10 +332,8 @@ def list_users_page():
 @app.route("/answer/<answer_id>/accept")
 def answer_accept(answer_id):
     answer = database_manager.get_answer_by_id(answer_id)
-    question = database_manager.get_question(answer.get("question_id"))
+    question = database_manager.get_question_by_id(answer.get("question_id"))
     user = database_manager.get_user_by_id(answer.get("user_id"))
-    print(user)
-    print(user.get("reputation") + 15)
     if question.get("user_id") == session["user_id"]:
         if answer.get("accepted") is not True:
             answer.update({"accepted": bool(True)})
@@ -351,8 +349,8 @@ def answer_accept(answer_id):
 
 @app.route("/user/<user_id>")
 def user_page(user_id):
-    #      if "username" not in session:
-    #         return redirect(url_for('login_page'))
+    if "username" not in session:
+        return redirect(url_for("login_page"))
     user = util.blah_blah(user_id)
     number_of_questions = database_manager.get_question_number(user_id)
     number_of_comment = database_manager.get_comment_number(user_id)
@@ -371,6 +369,7 @@ def demo_page():
     questions = database_manager.get_questions()
     questions = util.add_answer_number(questions)
     questions = util.get_tag_for_questions(questions)
+    print(len(questions))
     return render_template(
         "list_new.html", questions=questions, username=session["username"]
     )
@@ -379,7 +378,7 @@ def demo_page():
 @app.route("/tags")
 def tags_page():
     tags = database_manager.get_tags()
-    return render_template("tag_page.html", tags=tags)
+    return render_template("tag_page.html", tags=tags,username=session["username"])
 
 
 if __name__ == "__main__":
