@@ -1,15 +1,18 @@
-{% extends "base_template.html"%} {% block title %} Edit Comment{% endblock %} {% block
-content %}
+{% extends "base_template.html"%} {% block title %} Edit Comment{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='style/add_answer.css') }}">
+{% endblock %}
+{% block content %}
 <div class="firstdiv">
     <form
         action="{{ url_for('edit_comment_page', comment_id=comment.id) }}"
         method="post"
     >
         <label for="message">Your comment:</label><br />
-        <textarea id="message" name="message" rows="1" cols="60">
+        <textarea id="message" name="message" rows="7" cols="60">
 {{ comment.message }}</textarea
         ><br />
-        <button type="submit">EDIT COMMENT</button>
+        <button id="submit" type="submit">EDIT COMMENT</button>
     </form>
 </div>
 {% endblock %}
