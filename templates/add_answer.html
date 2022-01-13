@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename="/style/add_answer.css") }}">
 {% endblock %}
 {% block content %}
-<form
+<form class="addForm"
     action="{{ url_for('add_answer_page', question_id=question_id) }}"
     enctype="multipart/form-data"
     method="post"

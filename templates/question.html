@@ -67,6 +67,7 @@
                                 Reply
                             </a>
                         </li>
+
                     </ul>
                 </td>
             </tr>
@@ -185,6 +186,18 @@
                                     {% endif %}
                                 </a>
                             </li>
+                            <li class="floatbutton">
+                            <a
+                                class="detailbutton"
+                                href="{{ url_for('answer_accept', answer_id=answer.id)  }}"
+                            >
+                                {% if answer.accepted %}
+                                Accepted
+                                {% else %}
+                                Not accepted
+                                {% endif %}
+                            </a>
+                        </li>
                         </ul>
                     </td>
                 </tr>
@@ -196,7 +209,7 @@
                     <td>
                         {% if question.image != '' %}
                             <img
-                                src="{{ url_for('static', filename=answer.image) }}"
+                                src="{{ url_for('static',filename=answer.image) }}"
                                 width="20%"
                                 alt="Question Image"
                             />
