@@ -1,15 +1,18 @@
-{% extends "base_template.html" %} {% block title %}List Questions {% endblock %} {% block
-content %}
-<div>
+{% extends "base_template.html" %} {% block title %}List Questions {% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='style/list_users.css') }}">
+{% endblock %}
+{% block content %}
+<div class="mainDiv">
     <table>
-        <tr>
-            <td>Username</td>
-            <td>Registration date</td>
-            <td>Questions</td>
-            <td>Answers</td>
-            <td>Comments</td>
-            <td>Reputation</td>
-        </tr>
+        <thead>
+            <th>Username</th>
+            <th>Registration date</th>
+            <th>Questions</th>
+            <th>Answers</th>
+            <th>Comments</th>
+            <th>Reputation</th>
+        </thead>
         {% for user in users %}
         <tr>
             <td><a href="{{ url_for('user_page', user_id=user.id )}}">{{ user.username }}</a> </td>

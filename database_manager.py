@@ -10,7 +10,14 @@ def add_question(cursor, title, message, image, user_id):
             INSERT INTO question(title, message, image,user_id, submission_time) 
             VALUES (%(title)s, %(message)s, %(image)s, %(user_id)s, %(submission_time)s);"""
     cursor.execute(
-        query, {"title": title, "message": message, "image": image, "user_id": user_id, "submission_time":submission_time}
+        query,
+        {
+            "title": title,
+            "message": message,
+            "image": image,
+            "user_id": user_id,
+            "submission_time": submission_time,
+        },
     )
 
 
@@ -27,7 +34,7 @@ def add_answer(cursor, question_id, message, image, user_id):
             "message": message,
             "image": image,
             "user_id": user_id,
-            "submission_time": submission_time
+            "submission_time": submission_time,
         },
     )
 
@@ -174,7 +181,13 @@ def add_comment_answer(cursor, message, answer_id, user_id):
             INSERT INTO comment(message, answer_id, user_id, submission_time) 
             VALUES (%(message)s, %(answer_id)s, %(user_id)s, %(submission_time)s);"""
     cursor.execute(
-        query, {"message": message, "answer_id": answer_id, "user_id": user_id, "submission_time": submission_time}
+        query,
+        {
+            "message": message,
+            "answer_id": answer_id,
+            "user_id": user_id,
+            "submission_time": submission_time,
+        },
     )
 
 
@@ -291,7 +304,6 @@ def get_tag_by_name(cursor, tag_name):
     return cursor.fetchone()
 
 
-
 @database_connection.connection_handler
 def get_sorted_questions(cursor, sort_by, order_direction):
     query = f"""
@@ -373,7 +385,13 @@ def insert_user(cursor, username, password, reputation):
                 VALUES(%(username)s, %(password)s, %(reputation)s, %(registration_date)s )
                 ;"""
     cursor.execute(
-        query, {"username": username, "password": password, "reputation": reputation, "registration_date": registration_date}
+        query,
+        {
+            "username": username,
+            "password": password,
+            "reputation": reputation,
+            "registration_date": registration_date,
+        },
     )
 
 
@@ -508,4 +526,11 @@ def get_users(cursor):
     return users
 
 
+@database_connection.connection_handler
+def update_reputation(cursor, user):
+    query = """
+               UPDATE users
+               SET reputation = %(reputation)s
+               WHERE id=%(id)s;"""
+    cursor.execute(query, user)
 

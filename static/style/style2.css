@@ -2,7 +2,7 @@ html,
 body {
   background: url("/static/img/keep_the_ocean_clean-wallpaper-1920x1080.jpg") no-repeat fixed;
   padding: 10px;
-  font-family: 'Varela Round';
+  font-family: 'Verdana', sans-serif;
 }
 
 a {

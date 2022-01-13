@@ -1,0 +1,53 @@
+.mainDiv{
+    position: relative;
+    left: 22%;
+    width: 56%;
+    text-align: center;
+}
+
+table{
+    /*border: solid black 3px;*/
+    background-color: rgba(255, 255, 255, 0.7);
+    border-collapse: inherit;
+}
+table thead th{
+    border: black solid 1px;
+    text-align: center;
+    border-top-color: white;
+    border-bottom: #000000 2px solid;
+    padding: 5px 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+table tr td {
+    border: black solid 1px;
+    text-align: center;
+    border-top-color: #fcd200;
+    border-bottom-color: #00ffdc;
+    padding: 5px 10px;
+    font-size: 20px;
+    max-width: 450px;
+}
+
+table tr td a{
+    text-decoration: none;
+    color: rgba(0, 119, 255, 0.85);
+}
+
+.mainDiv button{
+    background-color: rgba(0, 0, 0, 0.47);
+    color: white;
+    margin: 10px;
+    font-size: 20px;
+}
+
+#doNotModifyThisId_QuestionsFilter{
+    background-color: rgba(0, 0, 0, 0.47);
+    color: white;
+    margin: 10px;
+    font-size: 20px;
+}
+
+::placeholder{
+    color: #cbcbcb;
+}

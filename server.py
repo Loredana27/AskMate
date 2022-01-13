@@ -338,7 +338,7 @@ def answer_accept(answer_id):
 @app.route("/user/<user_id>")
 def user_page(user_id):
     if "username" not in session:
-        return redirect(url_for('login_page'))
+        return redirect(url_for("login_page"))
     user = util.blah_blah(user_id)
     number_of_questions = database_manager.get_question_number(user_id)
     number_of_comment = database_manager.get_comment_number(user_id)
@@ -366,7 +366,7 @@ def demo_page():
 @app.route("/tags")
 def tags_page():
     tags = database_manager.get_tags()
-    return render_template("tag_page.html", tags=tags)
+    return render_template("tag_page.html", tags=tags,username=session["username"])
 
 
 if __name__ == "__main__":
