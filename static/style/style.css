@@ -46,7 +46,9 @@ nav{
 .firstdiv{
     margin-top: 100px;
 }
-
+.seconddiv{
+    margin-top: 40px;
+}
 
 nav.navbar.navbar-expand-lg.navbar-light.bg-light,
 .detailsrow,
@@ -54,14 +56,15 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light,
     width: 100%;
     margin: 0;
 }
+
 .question_table {
-    border: rgba(0, 0, 0, 0.35) 3px dashed;
+    /*border: rgba(0, 0, 0, 0.35) 3px dashed;*/
 }
 
 .comment_table {
-    width: 70%;
-    margin: 20px 20px 20px 80px;
-    border: rgba(0, 0, 0, 0.35) 2px dashed;
+    width: 95%;
+    margin: 20px 20px 20px 20px;
+    /*border: rgba(0, 0, 0, 0.35) 2px dashed;*/
 }
 
 .comment_div{
@@ -192,9 +195,9 @@ a.nav-link:hover {
     font-size: 25px;
 }
 
-.detailsrow,
+
 .comment_div{
-    background-color: bisque;
+    background-color: #dcdcdc;
 }
 
 .detailnavbar {
@@ -214,6 +217,14 @@ a.nav-link:hover {
 a.nav-link.disabled,
 .floatbutton {
     float: right;
+
+}
+
+.floatbutton {
+    font-size: 100%;
+    border: 0;
+    padding: 0;
+    text-decoration: none;
 }
 
 .titlequestion,
@@ -233,7 +244,11 @@ a.navbar-brand,
 .detailbutton {
     padding: 6px;
     font-size: 12px;
-    background-color: beige;
+    background-color: rgb(255 153 0 / 82%);
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 20px;
+    margin-top: -5px;
 }
 
 .titlequestion,
@@ -242,7 +257,13 @@ a.navbar-brand,
 }
 .addanswerbutton {
     display: block;
-    background-color: burlywood;
+    background-color: rgb(255 153 0 / 95%);
+    width: 10%;
+    border-radius: 20px;
+    text-indent: 10px;
+    margin-left: 10px;
+    position: relative;
+    left: 45%;
 }
 
 .questionmessage,

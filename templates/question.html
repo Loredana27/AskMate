@@ -1,110 +1,88 @@
 {% extends "base_template.html" %} {% block title %} Question {{ question.id }}{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='style/list_questions.css') }}">
+{% endblock %}
 {% block content %}
-    <div class="firstdiv">
-        <table class="question_table">
-            <tr class="detailsrow">
-                <td colspan="2">
-                    <ul class="detailnavbar">
-                        <li>{{ question.vote_number }} vote score</li>
-                        <li>{{ question.view_number }} views</li>
-                        <li>{{ question.answer_number }} answers</li>
-                        <li>Submission time: {{ question.submission_time }}</li>
-                        <li>
-                        {% if question.tags %}
-                            Tags:
-                                {% for tag in question.tags %}
-                                    {{ tag.name }}
-                                    <a
-                                        href="{{ url_for('delete_tag_page', question_id=question.id, tag_id=tag.id) }}"
-                                        class="detailbutton"
-                                    >
-                                        Delete {{ tag.name }}
-                                    </a>
-                                {% endfor %}
-                        {% endif %}
-                    </li>
-                    <li>
-                        <a
-                                href="{{ url_for('add_tag_page',question_id=question.id) }}"
-                                class="detailbutton"
-                            >
-                                Add tag
-                            </a>
-                    </li>
-                        <li class="floatbutton">
-                            <a
-                                href="{{ url_for('edit_question_page', question_id=question.id) }}"
-                                class="detailbutton"
-                                >Edit</a
-                            >
-                        </li>
-                        <li class="floatbutton">
-                            <a
-                                href="{{ url_for('delete_question', question_id=question.id) }}"
-                                class="detailbutton"
-                                >Delete</a
-                            >
-                        </li>
-                        <li class="floatbutton">
-                            <a
-                                href="{{ url_for('question_vote_up', question_id=question.id) }}"
-                                class="detailbutton"
-                                >Vote up</a
-                            >
-                        </li>
-                        <li class="floatbutton">
-                            <a
-                                href="{{ url_for('question_vote_down', question_id=question.id) }}"
-                                class="detailbutton"
-                                >Vote down</a
-                            >
-                        </li>
-                        <li class="floatbutton">
-                            <a
-                                class="detailbutton"
-                                href="{{url_for('add_question_comment_page', question_id=question.id)  }}"
-                            >
-                                Reply
-                            </a>
-                        </li>
+<div class="mainDiv">
+    <div class="questionDiv">
+        <div class="topDetails">
+            <div class="postDetail">
+                <p>Posted by {{ question.username }} at {{ question.submission_time }}
+                    <br>
+                    Tags
+                    {% for tag in question.tags %}
+                        <a href="/demo">{{ tag.name }}</a>
+                    {% endfor %}
+                </p>
+            </div>
+            <div class="voteDiv">
 
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td class="question_title">
-                    <a
-                        href="{{ url_for('question_page', question_id=question.id) }}"
-                        class="titlequestion"
-                        >{{ question.title }}</a
-                    >
-                </td>
-                <td rowspan="2">
-                    {% if question.image != '' and question.image != None %}
-                    <img
-                        src="{{ url_for('static', filename=question.image) }}"
-                        width="20%"
-                        alt="Question Image"
-                    />
+                <a href=""><img src="{{ url_for('static',filename='img/like_button.png') }}" width="30px"></a>
+                <a href=""><img src="{{ url_for('static',filename='img/dislike_button.png') }}" width="28px"></a>
+            </div>
+        </div>
+    <hr>
+        <div class="messageAndPhoto">
+            <div class="titleDiv">
+                <a
+                href="{{ url_for('question_page', question_id=question.id) }}"
+                class="title2">
+                    {% if search_term %}
+                        {% for word in question.title.split(" ") %}
+                            {% if search_term in word.lower() %}
+                            <mark>{{ word }}</mark>
+                            {%  else %}
+                            {{ word }}
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {{ question.title }}
                     {% endif %}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p class="questionmessage">{{ question.message }}</p>
-                </td>
-            </tr>
-        </table>
+                </a>
+            </div>
+            <div class="questionMessage"
+                {% if question.image != '' and question.image != None %}
+                    style="width: 70%!important;"
+                {% endif %}
+            >
+                <p>
+                    {% if search_term %}
+                        {% for word in question.message.split(" ") %}
+                            {% if search_term in word.lower() %}
+                            <mark>{{ word }}</mark>
+                            {%  else %}
+                            {{ word }}
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {{ question.message }}
+                    {% endif %}
+                </p>
+            </div>
+            {% if question.image != '' and question.image != None %}
+                <div class="questionImage">
+                    <p><img src="{{ url_for('static',filename=question.image) }}" width="100%"></p>
+                </div>
+            {% endif %}
+        </div>
+    <hr>
+        <div class="questionDetails">
+            <div>Score: {{ question.vote_number }}</div>
+            <div>Views: {{ question.view_number }}</div>
+            <div>Answers: {{ question.answer_number }}</div>
+        </div>
+    </div>
+    <div class="commentDiv">
             {% for comment in question.comments %}
 {#                <div class="comment_div">#}
                     <table class="comment_table">
                         <tr>
                             <td><p class="comment_p">{{ comment.message }}</p></td>
                         </tr>
-
                         <tr class="detailsrow">
                             <td>
                                 <ul class="detailnavbar">
+                                    <hr>
                                     <li>{{ comment.edited_count }} times edited</li>
                                     <li>Submission time: {{ comment.submission_time }}</li>
                                     <li class="floatbutton">
@@ -127,14 +105,31 @@
                     </table>
 {#                </div>#}
             {% endfor %}
-
     </div>
 
+
     {% for answer in question.answers %}
-        <div class="firstdiv">
+        <div class="answerDiv">
+        <div class="seconddiv">
             <table class="question_table">
+                <tr>
+                    <td class="question_title">
+                        <p class="questionmessage">{{ answer.message }}</p>
+                    </td>
+
+                    <td>
+                        {% if question.image != '' and question.image != None%}
+                            <img
+                                src="{{ url_for('static',filename=answer.image) }}"
+                                width="20%"
+                                alt="Question Image"
+                            />
+                        {% endif %}
+                    </td>
+                </tr>
                 <tr class="detailsrow">
                     <td colspan="2">
+                    <hr>
                         <ul class="detailnavbar">
                             <li>{{ answer.vote_number }} vote score</li>
                             <li>Submission time: {{ answer.submission_time }}</li>
@@ -187,36 +182,12 @@
                                 </a>
                             </li>
                             <li class="floatbutton">
-                            <a
-                                class="detailbutton"
-                                href="{{ url_for('answer_accept', answer_id=answer.id)  }}"
-                            >
-                                {% if answer.accepted %}
-                                Accepted
-                                {% else %}
-                                Not accepted
-                                {% endif %}
-                            </a>
                         </li>
                         </ul>
                     </td>
                 </tr>
-                <tr>
-                    <td class="question_title">
-                        <p class="questionmessage">{{ answer.message }}</p>
-                    </td>
-
-                    <td>
-                        {% if question.image != '' and question.image != None%}
-                            <img
-                                src="{{ url_for('static',filename=answer.image) }}"
-                                width="20%"
-                                alt="Question Image"
-                            />
-                        {% endif %}
-                    </td>
-                </tr>
             </table>
+        </div>
         </div>
             {% for comment in answer.comments %}
 
@@ -256,5 +227,5 @@
         href="{{url_for('add_answer_page', question_id=question.id)  }}"
         >Add answer</a
     >
-
+</div>
 {% endblock %}
