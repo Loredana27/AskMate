@@ -3,7 +3,7 @@ body {
     background-image: url("/static/images/keep_the_ocean_clean-wallpaper-1920x1080.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Verdana', serif;
 }
 header{
     position: absolute;
@@ -102,7 +102,7 @@ a.navbar-brand {
     padding: 14px;
     font-weight: inherit;
     font-size: 20px;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Verdana', serif;
 }
 
 /* inline flex */
@@ -139,7 +139,7 @@ a.nav-link,
     position: fixed;
     top: 8px;
     right: 7px;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Verdana', serif;
 }
 
 .searchForm form{
@@ -166,7 +166,7 @@ a.nav-link {
     color: #ffffff;
     border-radius: 10px;
     text-decoration: none;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Verdana', serif;
     text-wrap: normal;
 }
 

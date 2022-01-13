@@ -6,7 +6,9 @@ def add_question(cursor, title, message, image, user_id):
     query = """
             INSERT INTO question(title, message, image,user_id) 
             VALUES (%(title)s, %(message)s, %(image)s, %(user_id)s );"""
-    cursor.execute(query, {"title": title, "message": message, "image": image, "user_id": user_id})
+    cursor.execute(
+        query, {"title": title, "message": message, "image": image, "user_id": user_id}
+    )
 
 
 @database_connection.connection_handler
@@ -15,7 +17,13 @@ def add_answer(cursor, question_id, message, image, user_id):
             INSERT INTO answer(question_id, message, image, user_id) 
             VALUES (%(question_id)s, %(message)s, %(image)s, %(user_id)s );"""
     cursor.execute(
-        query, {"question_id": question_id, "message": message, "image": image, "user_id": user_id}
+        query,
+        {
+            "question_id": question_id,
+            "message": message,
+            "image": image,
+            "user_id": user_id,
+        },
     )
 
 
@@ -139,7 +147,9 @@ def add_comment_question(cursor, message, question_id, user_id):
     query = """
             INSERT INTO comment(message, question_id, user_id) 
             VALUES (%(message)s, %(question_id)s, %(user_id)s);"""
-    cursor.execute(query, {"message": message, "question_id": question_id, "user_id": user_id})
+    cursor.execute(
+        query, {"message": message, "question_id": question_id, "user_id": user_id}
+    )
 
 
 @database_connection.connection_handler
@@ -147,7 +157,9 @@ def add_comment_answer(cursor, message, answer_id, user_id):
     query = """
             INSERT INTO comment(message, answer_id, user_id) 
             VALUES (%(message)s, %(answer_id)s, %(user_id)s);"""
-    cursor.execute(query, {"message": message, "answer_id": answer_id, "user_id": user_id})
+    cursor.execute(
+        query, {"message": message, "answer_id": answer_id, "user_id": user_id}
+    )
 
 
 @database_connection.connection_handler
@@ -370,7 +382,9 @@ def insert_user(cursor, username, password, reputation):
                 INSERT INTO users(username, password, reputation)
                 VALUES(%(username)s, %(password)s, %(reputation)s )
                 ;"""
-    cursor.execute(query, {"username": username, "password": password, "reputation": reputation})
+    cursor.execute(
+        query, {"username": username, "password": password, "reputation": reputation}
+    )
 
 
 @database_connection.connection_handler
@@ -396,7 +410,6 @@ def get_answer_number(cursor, id_user):
         ;"""
     cursor.execute(query, {"id_user": id_user})
     return cursor.fetchone()
-
 
 
 @database_connection.connection_handler
@@ -453,6 +466,7 @@ def get_comments_user(cursor, user_id):
     cursor.execute(query, {"user_id": user_id})
     return cursor.fetchall()
 
+
 @database_connection.connection_handler
 def get_tags(cursor):
     query = """
@@ -467,26 +481,40 @@ def get_tags(cursor):
 
 @database_connection.connection_handler
 def get_users(cursor):
-    cursor.execute("select u.id, u.username, DATE(u.registration_date) AS registration_date from users u;")
+    cursor.execute(
+        "select u.id, u.username, DATE(u.registration_date) AS registration_date, reputation from users u;"
+    )
     users = cursor.fetchall()
-    cursor.execute("select count(c.id) as comment, c.user_id from comment c group by c.user_id;" )
+    cursor.execute(
+        "select count(c.id) as comment, c.user_id from comment c group by c.user_id;"
+    )
     comments = cursor.fetchall()
-    cursor.execute("select count(a.id) as answer, a.user_id from answer a group by a.user_id;" )
+    cursor.execute(
+        "select count(a.id) as answer, a.user_id from answer a group by a.user_id;"
+    )
     answers = cursor.fetchall()
-    cursor.execute("select count(a.id) as question, a.user_id from question a group by a.user_id;")
+    cursor.execute(
+        "select count(q.id) as question, q.user_id from question q group by q.user_id;"
+    )
     questions = cursor.fetchall()
     for i, u in enumerate(users):
-        comment = [c.get("comment") for c in comments if c.get("user_id") == u.get("id")]
+        comment = [
+            c.get("comment") for c in comments if c.get("user_id") == u.get("id")
+        ]
         comment = comment.pop() if len(comment) else 0
         answer = [c.get("answer") for c in answers if c.get("user_id") == u.get("id")]
         answer = answer.pop() if len(answer) else 0
-        question = [c.get("question") for c in questions if c.get("user_id") == u.get("id")]
+        question = [
+            c.get("question") for c in questions if c.get("user_id") == u.get("id")
+        ]
         question = question.pop() if len(question) else 0
-        users[i].update({
+        users[i].update(
+            {
                 "comments": comment,
                 "answers": answer,
                 "questions": question,
-            })
+            }
+        )
     return users
 
 
