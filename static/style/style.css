@@ -1,8 +1,5 @@
 body {
     text-align: justify;
-    background-image: url("/static/img/keep_the_ocean_clean-wallpaper-1920x1080.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
     font-family: 'Verdana', sans-serif;
 }
 header{
@@ -42,6 +39,18 @@ nav{
     top: 0;
     right: 0;
     left: 0;
+}
+.background{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-image: url("/static/img/keep_the_ocean_clean-wallpaper-1920x1080.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    -webkit-filter: blur(5px);
+    -ms-filter: blur(5px);
 }
 .firstdiv{
     margin-top: 100px;
