@@ -1,55 +1,36 @@
-/*------------------------------------------------------------------
-[Master Stylesheet]
-
-Project    	: Aether
-Version		: 1.0
-Last change	: 2015/03/27
--------------------------------------------------------------------*/
-/*------------------------------------------------------------------
-[Table of contents]
-
-1. General Structure
-2. Anchor Link
-3. Text Outside the Box
-4. Main Form
-5. Login Button
-6. Form Invalid
-7. Form - Main Message
-8. Custom Checkbox & Radio
-9. Misc
--------------------------------------------------------------------*/
-/*=== 1. General Structure ===*/
 html,
 body {
-  background: #efefef;
+  background: url("/static/img/keep_the_ocean_clean-wallpaper-1920x1080.jpg") no-repeat fixed;
   padding: 10px;
-  font-family: 'Varela Round';
+  font-family: 'Verdana', sans-serif;
 }
-/*=== 2. Anchor Link ===*/
+
 a {
-  color: #aaaaaa;
+  color: #000000;
   transition: all ease-in-out 200ms;
 }
 a:hover {
-  color: #333333;
+  color: #0057ff;
   text-decoration: none;
 }
-/*=== 3. Text Outside the Box ===*/
+
 .etc-login-form {
-  color: #919191;
-  padding: 10px 20px;
+      color: #000000;
+    /*padding: 10px 20px;*/
+    margin-left: 30px;
 }
 .etc-login-form p {
   margin-bottom: 5px;
 }
-/*=== 4. Main Form ===*/
+
 .login-form-1 {
   max-width: 300px;
-  border-radius: 5px;
+  border-radius: 10px;
   display: inline-block;
 }
 .main-login-form {
   position: relative;
+  width: 300px;
 }
 .login-form-1 .form-control {
   border: 0;
@@ -59,7 +40,8 @@ a:hover {
   color: #555555;
   padding: 7px 0;
   font-weight: bold;
-  height:auto;
+  height:50px;
+  font-size: 20px;
 }
 .login-form-1 .form-control::-webkit-input-placeholder {
   color: #999999;
@@ -70,44 +52,45 @@ a:hover {
   color: #999999;
 }
 .login-form-1 .form-group {
-  margin-bottom: 0;
-  border-bottom: 2px solid #efefef;
-  padding-right: 20px;
-  position: relative;
+    margin-bottom: 0;
+    border-bottom: 2px solid #efefef;
+    padding-right: 20px;
+    height: 60px;
+    position: relative;
 }
 .login-form-1 .form-group:last-child {
   border-bottom: 0;
 }
 .login-group {
-  background: #ffffff;
+  background: #000000;
   color: #999999;
-  border-radius: 8px;
+  border-radius: 44px;
   padding: 10px 20px;
 }
 .login-group-checkbox {
   padding: 5px 0;
 }
-/*=== 5. Login Button ===*/
+
 .login-form-1 .login-button {
   position: absolute;
-  right: -25px;
-  top: 50%;
-  background: #ffffff;
-  color: #999999;
-  padding: 11px 0;
-  width: 50px;
-  height: 50px;
-  margin-top: -25px;
-  border: 5px solid #efefef;
-  border-radius: 50%;
-  transition: all ease-in-out 500ms;
+    right: -25px;
+    top: 55%;
+    background: #000000;
+    color: #999999;
+    padding: 11px 0;
+    width: 50px;
+    height: 50px;
+    margin-top: -25px;
+    border: 5px solid #efefef;
+    border-radius: 50%;
+    transition: all ease-in-out 500ms;
 }
 .login-form-1 .login-button:hover {
-  color: #555555;
+  color: #ffffff;
   transform: rotate(450deg);
 }
 .login-form-1 .login-button.clicked {
-  color: #555555;
+  color: #ffffff;
 }
 .login-form-1 .login-button.clicked:hover {
   transform: none;
@@ -118,7 +101,7 @@ a:hover {
 .login-form-1 .login-button.clicked.error {
   color: #e74c3c;
 }
-/*=== 6. Form Invalid ===*/
+
 label.form-invalid {
   position: absolute;
   top: 0;
@@ -146,7 +129,7 @@ label.form-invalid:after {
   border-top-color: #777777;
   border-width: 6px;
 }
-/*=== 7. Form - Main Message ===*/
+
 .login-form-main-message {
   background: #ffffff;
   color: #999999;
@@ -170,8 +153,8 @@ label.form-invalid:after {
 .login-form-main-message.error {
   border-left-color: #e74c3c;
 }
-/*=== 8. Custom Checkbox & Radio ===*/
-/* Base for label styling */
+
+
 [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked,
 [type="radio"]:not(:checked),
@@ -188,7 +171,7 @@ label.form-invalid:after {
   padding-top: 1px;
   cursor: pointer;
 }
-/* checkbox aspect */
+
 [type="checkbox"]:not(:checked) + label:before,
 [type="checkbox"]:checked + label:before,
 [type="radio"]:not(:checked) + label:before,
@@ -204,7 +187,7 @@ label.form-invalid:after {
   border-radius: 3px;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
 }
-/* checked mark aspect */
+
 [type="checkbox"]:not(:checked) + label:after,
 [type="checkbox"]:checked + label:after,
 [type="radio"]:not(:checked) + label:after,
@@ -213,7 +196,7 @@ label.form-invalid:after {
   color: #555555;
   transition: all .2s;
 }
-/* checked mark aspect changes */
+
 [type="checkbox"]:not(:checked) + label:after,
 [type="radio"]:not(:checked) + label:after {
   opacity: 0;
@@ -224,7 +207,7 @@ label.form-invalid:after {
   opacity: 1;
   transform: scale(1);
 }
-/* disabled checkbox */
+
 [type="checkbox"]:disabled:not(:checked) + label:before,
 [type="checkbox"]:disabled:checked + label:before,
 [type="radio"]:disabled:not(:checked) + label:before,
@@ -241,19 +224,19 @@ label.form-invalid:after {
 [type="radio"]:disabled + label {
   color: #8c8c8c;
 }
-/* accessibility */
+
 [type="checkbox"]:checked:focus + label:before,
 [type="checkbox"]:not(:checked):focus + label:before,
 [type="checkbox"]:checked:focus + label:before,
 [type="checkbox"]:not(:checked):focus + label:before {
   border: 1px dotted #f6f6f6;
 }
-/* hover style just for information */
+
 label:hover:before {
   border: 1px solid #f6f6f6 !important;
 }
-/*=== Customization ===*/
-/* radio aspect */
+
+
 [type="checkbox"]:not(:checked) + label:before,
 [type="checkbox"]:checked + label:before {
   border-radius: 3px;
@@ -262,7 +245,7 @@ label:hover:before {
 [type="radio"]:checked + label:before {
   border-radius: 35px;
 }
-/* selected mark aspect */
+
 [type="checkbox"]:not(:checked) + label:after,
 [type="checkbox"]:checked + label:after {
   content: '✔';
@@ -278,10 +261,17 @@ label:hover:before {
   font-size: 30px;
   line-height: 25px;
 }
-/*=== 9. Misc ===*/
+
 .logo {
   padding: 15px 0;
   font-size: 25px;
-  color: #aaaaaa;
+  color: #000000;
   font-weight: bold;
+}
+input,
+input:hover,
+input:focus,
+input:active{
+  -webkit-box-shadow: 0 0 0 30px #000000 inset !important;
+  -webkit-text-fill-color: #949494 !important;
 }

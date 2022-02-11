@@ -1,19 +1,22 @@
-{% extends "base_template.html" %} {% block title %} Edit Question {% endblock %} {% block
-content %}
+{% extends "base_template.html" %} {% block title %} Edit Question {% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='style/add_answer.css') }}">
+{% endblock %}
+{% block content %}
 <div class="firstdiv">
     <form
         action="{{ url_for('edit_question_page', question_id=question.id) }}"
         method="post"
     >
         <label for="title">Title:</label><br />
-        <textarea id="title" name="title" rows="1" cols="60">
+        <textarea id="title" name="title" rows="2" cols="60">
 {{ question.title }}</textarea
         ><br />
         <label for="message">Messsage:</label><br />
-        <textarea id="message" name="message" rows="1" cols="60">
+        <textarea id="message" name="message" rows="7" cols="60">
 {{ question.message }}</textarea
         ><br />
-        <button type="submit">EDIT QUESTION</button>
+        <button id="submit" type="submit">EDIT QUESTION</button>
     </form>
 </div>
 {% endblock %}

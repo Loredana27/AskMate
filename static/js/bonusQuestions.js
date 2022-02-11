@@ -8,16 +8,24 @@ function getSortedItems(items, sortField, sortDirection) {
     // if you have not changed the original html uncomment the code below to have an idea of the
     // effect this function has on the table
     //
-    if (sortDirection === "asc") {
-        const firstItem = items.shift()
-        if (firstItem) {
-            items.push(firstItem)
-        }
-    } else {
-        const lastItem = items.pop()
-        if (lastItem) {
-            items.push(lastItem)
-        }
+
+    console.log(items[0][sortField])
+    if (sortDirection === "asc" && (sortField == "VoteCount" || sortField == "ViewNumber")) {
+        items.sort((function (a, b) {return a[sortField] - b[sortField]}))
+    } else if (sortDirection === "desc" && (sortField == "VoteCount" || sortField == "ViewNumber")) {
+        items.sort((function (a, b) {return b[sortField] - a[sortField]}))
+    } else if (sortDirection === "asc" && (sortField === "Title" || sortField === "Description")) {
+        items.sort(function (a, b) {
+            if (a[sortField] < b[sortField]) {return -1}
+            else if (a[sortField] > b[sortField]) {return  1}
+            else {return 0}
+        })
+    } else if (sortDirection === "desc" && (sortField === "Title" || sortField === "Description")) {
+        items.sort(function (a, b) {
+            if (a[sortField] > b[sortField]) {return -1}
+            else if (a[sortField] < b[sortField]) {return  1}
+            else {return 0}
+        })
     }
 
     return items
@@ -27,16 +35,36 @@ function getSortedItems(items, sortField, sortDirection) {
 function getFilteredItems(items, filterValue) {
     console.log(items)
     console.log(filterValue)
-
     // === SAMPLE CODE ===
     // if you have not changed the original html uncomment the code below to have an idea of the
     // effect this function has on the table
     //
-    for (let i=0; i<filterValue.length; i++) {
-        items.pop()
+    let reverse = false
+    if (filterValue[0]=="!") {
+        reverse = true
+        filterValue = filterValue.substring(1)
     }
-
-    return items
+    let reverse_filtered_items = items
+    console.log(items)
+    let filtered_items = []
+    for (let i=0; i<items.length; i++) {
+        if ((items[i]["Title"].includes(filterValue) || items[i]["Description"].includes(filterValue)) && !reverse) {
+            filtered_items.push(items[i])
+        } else if (items[i]["Title"].includes(filterValue) || items[i]["Description"].includes(filterValue)) {
+            delete reverse_filtered_items[i]
+        }
+    }
+    let refined_reverse = []
+    if (reverse) {
+        for (let index=0; index<reverse_filtered_items.length; index++){
+            if (reverse_filtered_items[index]) {
+                refined_reverse.push(reverse_filtered_items[index])
+            }
+        }
+        return refined_reverse
+    } else {
+        return filtered_items
+    }
 }
 
 function toggleTheme() {

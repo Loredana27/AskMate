@@ -1,24 +1,88 @@
 body {
     text-align: justify;
+    font-family: 'Verdana', sans-serif;
+}
+header{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin-bottom: 25px;
+    z-index: 5000;
+}
+footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #383839;
+    text-align: center;
+    z-index: 5000;
+}
+footer div h5{
+    color: white;
 }
 
-.firstdiv,
-form {
-    margin-top: 80px;
+#q{
+    width: 200px;
+    height: 25px;
+    font-size: 20px;
 }
+
+#qs{
+    height: 30px;
+    font-size: 20px;
+    border-radius: 10px  ;
+}
+nav{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+.background{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-image: url("/static/img/keep_the_ocean_clean-wallpaper-1920x1080.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    -webkit-filter: blur(5px);
+    -ms-filter: blur(5px);
+}
+.firstdiv{
+    margin-top: 100px;
+}
+.seconddiv{
+    margin-top: 40px;
+}
+
+sub{
+    font-size: 9px;
+}
+
 nav.navbar.navbar-expand-lg.navbar-light.bg-light,
 .detailsrow,
 .question_table {
     width: 100%;
+    margin: 0;
 }
+
+.questionDetails{
+    width: 96%!important;
+}
+
 .question_table {
-    border: rgba(0, 0, 0, 0.35) 3px dashed;
+    /*border: rgba(0, 0, 0, 0.35) 3px dashed;*/
+    margin: 10px;
 }
 
 .comment_table {
-    width: 70%;
-    margin: 20px 20px 20px 80px;
-    border: rgba(0, 0, 0, 0.35) 2px dashed;
+    width: 95%;
+    margin: 20px 20px 20px 20px;
+    /*border: rgba(0, 0, 0, 0.35) 2px dashed;*/
 }
 
 .comment_div{
@@ -30,14 +94,41 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light,
     width: 80%;
 }
 
+.nav-link.active{
+    text-align: center;
+    vertical-align: center;
+}
+
+.nav-link.disabled.account{
+    width: auto;
+    margin-top: 25px;
+}
+
+.nav-link.disabled.logo{
+    width: 150px;
+}
+
+.nav-link.disabled.logout{
+     right: 0;
+     width: auto;
+    margin-top: 25px;
+}
+
 a.navbar-brand,
 a.nav-link {
     padding: 8px;
+    font-size: 15px;
 }
 
 a.navbar-brand {
     margin: 16px 8px 16px 16px;
-    background-color: #75ccf5cc;
+    background-color: #383839;
+    color: #ffffff;
+    border-radius: 15px;
+    padding: 14px;
+    font-weight: inherit;
+    font-size: 20px;
+    font-family: 'Verdana', sans-serif;
 }
 
 /* inline flex */
@@ -49,6 +140,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light {
 /* flex */
 .container-fluid,
 nav.navbar.navbar-expand-lg.navbar-light.bg-light {
+
     flex-direction: row;
     flex-wrap: wrap;
     align-content: flex-start;
@@ -64,38 +156,66 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light {
 .detailbutton,
 a.nav-link,
 .navbar-nav {
-    margin: 8px;
+    display: inline;
+    margin: 16px 8px 8px;
+}
 
+.searchForm{
+    display: inline-block;
+    position: fixed;
+    top: 8px;
+    right: 7px;
+    font-family: 'Verdana', sans-serif;
+}
+
+.searchForm form{
+    display: block;
+}
+
+.floatNav{
+    float: right;
+    position: fixed;
+    right: 300px;
+    margin: 0;
+}
+
+.pageNav{
+    position: fixed;
+    left: 60px;
 }
 
 a.nav-link {
+    width: 60px;
+    text-align: center;
     float: left;
-    background-color: #8d8c8c;
-    color: aliceblue;
+    background-color: #383839;
+    color: #ffffff;
     border-radius: 10px;
     text-decoration: none;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Verdana', sans-serif;
     text-wrap: normal;
 }
 
 .detailnavbar,
 a.nav-link.disabled {
     display: inline;
+
 }
 
 .detailbutton:hover,
 a.navbar-brand:hover,
 a.nav-link:hover {
-    background-color: rgb(185, 185, 185);
+    /*background-color: rgb(255, 255, 255);*/
+    color: rgba(185,185,185,0.55);
 }
 
 .titlequestion {
     font-size: 25px;
 }
 
-.detailsrow,
+
 .comment_div{
-    background-color: bisque;
+    background-color: #dcdcdc;
 }
 
 .detailnavbar {
@@ -115,6 +235,14 @@ a.nav-link:hover {
 a.nav-link.disabled,
 .floatbutton {
     float: right;
+
+}
+
+.floatbutton {
+    font-size: 100%;
+    border: 0;
+    padding: 0;
+    text-decoration: none;
 }
 
 .titlequestion,
@@ -134,7 +262,11 @@ a.navbar-brand,
 .detailbutton {
     padding: 6px;
     font-size: 12px;
-    background-color: beige;
+    background-color: rgb(255 153 0 / 82%);
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 20px;
+    margin-top: -5px;
 }
 
 .titlequestion,
@@ -143,7 +275,15 @@ a.navbar-brand,
 }
 .addanswerbutton {
     display: block;
-    background-color: burlywood;
+    background-color: rgb(255 153 0 / 95%);
+    width: 10%;
+    min-width: 160px;
+    border-radius: 20px;
+    text-indent: 10px;
+    margin-left: 10px;
+    position: relative;
+    left: 45%;
+    text-align: center;
 }
 
 .questionmessage,

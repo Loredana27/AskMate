@@ -1,11 +1,14 @@
 {% extends "base_template.html" %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename="/style/add_answer.css") }}">
+{% endblock %}
 {% block title %}
     Add comment
 {% endblock %}
 {% block content %}
     <form action="{{ url_for('add_answer_comment_page', answer_id=answer_id) }}" method="post" >
         <label for="comment_message">Comment Messsage:</label><br />
-        <textarea id="comment_message" name="comment_message" rows="1" cols="60"></textarea>
-        <button type="submit">ADD COMMENT</button>
+        <textarea id="comment_message" name="comment_message" rows="7" cols="60"></textarea><br>
+        <button id="submit" type="submit">ADD COMMENT</button>
     </form>
 {% endblock %}

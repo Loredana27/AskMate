@@ -1,6 +1,10 @@
-{% extends "base_template.html" %} {% block title %} Add answer {% endblock %} {% block
-content %}
-<form
+{% extends "base_template.html" %}
+{% block title %} Add answer {% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename="/style/add_answer.css") }}">
+{% endblock %}
+{% block content %}
+<form class="addForm"
     action="{{ url_for('add_answer_page', question_id=question_id) }}"
     enctype="multipart/form-data"
     method="post"
@@ -16,7 +20,7 @@ content %}
         alt="Add answer image"
     />
     <br />
-    <button type="submit">ADD ANSWER</button>
+    <button id="submit" type="submit">ADD ANSWER</button>
 </form>
 
 {% endblock %}

@@ -8,18 +8,20 @@
     </title>
     {% block head %}
     {% endblock %}
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <link rel="stylesheet" href="{{ url_for('static',filename='style/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='style/style.css') }}">
 </head>
 <body>
+<header>
     {% include 'navigation.html' %}
+</header>
+    <div class="background">
+
+    </div>
+    <div class="firstdiv"></div>
     {% block content %}
     {% endblock %}
+    <div class="firstdiv"></div>
+    {% include 'footer.html' %}
+    <div style="height: 60px"></div>
 </body>
 </html>
