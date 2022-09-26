@@ -2,6 +2,8 @@
 
 ## About the project
 
+Project was made by L.A.S Team ([Loredana Stefania Mihai](https://github.com/Loredana27), [Marian-Andrei Sidor](https://github.com/SidorAndrei), [Sergiu Pert](https://github.com/SergiuPert)).
+
 AskMate is a basic forum for any type of question.
 
 ## Features
