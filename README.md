@@ -34,3 +34,16 @@ AskMate is a basic forum for any type of question.
 - [CSS](https://www.w3schools.com/css/) - styling language
 - [JavaScript](https://www.javascript.com/) - programming language used for frontend
 - [PostgreSQL](https://www.postgresql.org/) - database used
+
+
+## Sample photos
+
+<div style="display: grid; grid-template-columns: auto auto auto;column-gap: 10px;row-gap: 10px">
+    <img src="https://raw.githubusercontent.com/SidorAndrei/AskMate/development/assets/login.png" height="auto" width="100%">
+    <img src="https://raw.githubusercontent.com/SidorAndrei/AskMate/development/assets/mainpage.png" height="auto" width="100%">
+    <img src="https://raw.githubusercontent.com/SidorAndrei/AskMate/development/assets/bonus_questions.png" height="auto" width="100%">
+    <img src="https://raw.githubusercontent.com/SidorAndrei/AskMate/development/assets/add_question.png" height="auto" width="100%">
+    <img src="https://raw.githubusercontent.com/SidorAndrei/AskMate/development/assets/search.png" height="auto" width="100%">
+    <img src="https://raw.githubusercontent.com/SidorAndrei/AskMate/development/assets/view_question.png" height="auto" width="100%">
+    <img src="https://raw.githubusercontent.com/SidorAndrei/AskMate/development/assets/register.png" height="auto" width="100%">
+</div>
