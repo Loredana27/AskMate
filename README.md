@@ -18,10 +18,19 @@ AskMate is a basic forum for any type of question.
 - Filter questions by tag
 
 ## Tech
+<p>
+    <img src="https://raw.githubusercontent.com/SidorAndrei/AskMate/development/assets/Python-logo-notext.svg" height="auto" width="40">
+    <img src="https://raw.githubusercontent.com/SidorAndrei/AskMate/development/assets/Flask_logo.svg" height="auto" width="40">
+    <img src="https://raw.githubusercontent.com/SidorAndrei/AskMate/development/assets/html5-original.svg" height="auto" width="40">
+    <img src="https://raw.githubusercontent.com/SidorAndrei/AskMate/development/assets/css3-original.svg" height="auto" width="40">
+    <img src="https://raw.githubusercontent.com/SidorAndrei/AskMate/development/assets/javascript-plain.svg" height="auto" width="40">
+    <img src="https://raw.githubusercontent.com/SidorAndrei/AskMate/development/assets/Postgresql_elephant.svg" height="auto" width="40">
+    
+</p>
 
 - [Python](https://www.python.org/) - programming language used for this project
-- [HTML](https://www.w3schools.com/html/) - standard markup language for Web pages
 - [Flask](https://flask.palletsprojects.com/en/2.2.x/) - micro web framework written in Python
+- [HTML](https://www.w3schools.com/html/) - standard markup language for Web pages
 - [CSS](https://www.w3schools.com/css/) - styling language
 - [JavaScript](https://www.javascript.com/) - programming language used for frontend
 - [PostgreSQL](https://www.postgresql.org/) - database used
